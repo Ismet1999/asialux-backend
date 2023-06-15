@@ -10,18 +10,131 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// tour agency
 model Branch {
-  id        Int      @id @default(autoincrement())
-  name      String   @unique
-  createdAt DateTime @default(now())
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  createdAt DateTime  @default(now())
+  User      User[]
+  request   Request[]
+  invoice   Invoice[]
+  payment   Payment[]
 }
 
-// model User {
-//   id    Int     @id @default(autoincrement())
-//   email String  @unique
-//   name  String?
-//   // posts Post[]
-// }
+model User {
+  id             Int       @id @default(autoincrement())
+  photo          String?
+  fullName       String
+  password       String
+  phone          String
+  passportSeries String    @unique
+  branch         Branch    @relation(fields: [branchId], references: [id])
+  branchId       Int
+  createdAt      DateTime  @default(now())
+  status         Boolean   @default(true)
+  role           String?
+  superAdmin     Boolean   @default(false)
+  request        Request[]
+  invoice        Invoice[]
+}
+
+model Client {
+  id             Int       @id @default(autoincrement())
+  fullName       String
+  phoneNumbers   String[]
+  passportSeries String    @unique
+  createdAt      DateTime  @default(now())
+  request        Request[]
+  invoice        Invoice[]
+}
+
+model Request {
+  id            Int            @id @default(autoincrement())
+  type          String // tour, ticket, visa
+  createdAt     DateTime       @default(now())
+  client        Client         @relation(fields: [clientId], references: [id])
+  clientId      Int
+  user          User           @relation(fields: [userId], references: [id])
+  userId        Int
+  branch        Branch         @relation(fields: [branchId], references: [id])
+  branchId      Int
+  b2cPrice      Int
+  requestTour   RequestTour?
+  requestTicket RequestTicket?
+  requestVisa   RequestVisa?
+  invoice       Invoice?
+}
+
+model RequestTour {
+  id              Int      @id @default(autoincrement())
+  createdAt       DateTime @default(now())
+  request         Request  @relation(fields: [requestId], references: [id])
+  requestId       Int      @unique
+  ticketId        String
+  tourId          String
+  tourDestination String
+  flightDate      DateTime
+  b2bPrice        Int
+  b2cPrice        Int
+}
+
+model RequestTicket {
+  id                Int      @id @default(autoincrement())
+  createdAt         DateTime @default(now())
+  request           Request  @relation(fields: [requestId], references: [id])
+  requestId         Int      @unique
+  ticketId          String
+  ticketDestination String
+  flightDate        DateTime
+  b2bPrice          Int
+  b2cPrice          Int
+}
+
+model RequestVisa {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  request   Request  @relation(fields: [requestId], references: [id])
+  requestId Int      @unique
+  visaId    String
+  b2cPrice  Int
+}
+
+model Invoice {
+  id            Int       @id @default(autoincrement())
+  createdAt     DateTime  @default(now())
+  request       Request   @relation(fields: [requestId], references: [id])
+  requestId     Int       @unique
+  client        Client    @relation(fields: [clientId], references: [id])
+  clientId      Int
+  invoiceAmount Int
+  invoiceStatus String // pending, paid, canceled
+  payment       Payment[]
+  branch        Branch    @relation(fields: [branchId], references: [id])
+  branchId      Int
+  user          User?     @relation(fields: [userId], references: [id])
+  userId        Int?
+}
+
+model Payment {
+  id            Int      @id @default(autoincrement())
+  type          String // cash, card, transfer
+  rawAmount     Int // amount from client
+  rawCurrency   String // currency from client
+  createdAt     DateTime @default(now())
+  invoice       Invoice  @relation(fields: [invoiceId], references: [id])
+  invoiceId     Int
+  paymentAmount Int // only dollar
+  branch        Branch   @relation(fields: [branchId], references: [id])
+  branchId      Int
+}
+
+model Currency {
+  id        Int      @id @default(autoincrement())
+  currency  String
+  createdAt DateTime @default(now())
+  date      DateTime @unique
+  value     Int
+}
 
 // model Post {
 //   id        Int      @id @default(autoincrement())
