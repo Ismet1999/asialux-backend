@@ -1,0 +1,21 @@
+version: '3.2'
+
+services:
+
+
+  postgres:
+    image: postgres:latest
+    restart: always
+    networks:
+      - webnet
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: "${DB_USERNAME}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+      POSTGRES_DB: "${DB_NAME}"
+    # volumes:
+    #   - ./data:/data/db
+
+networks:
+  webnet:
