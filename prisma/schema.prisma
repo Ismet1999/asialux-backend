@@ -15,7 +15,7 @@ model Branch {
   id        Int       @id @default(autoincrement())
   name      String    @unique
   createdAt DateTime  @default(now())
-  User      User[]
+  user      User[]
   request   Request[]
   invoice   Invoice[]
   payment   Payment[]
@@ -26,7 +26,7 @@ model User {
   photo          String?
   fullName       String
   password       String
-  phone          String
+  phone          String[]
   passportSeries String    @unique
   branch         Branch    @relation(fields: [branchId], references: [id])
   branchId       Int
