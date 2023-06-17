@@ -3,27 +3,39 @@ import { CreateUserDto } from './dto/CreateUser.dto';
 import { HashService } from './hash.service';
 import { ROLES } from './user.utils';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { User, Prisma } from '@prisma/client';
+import { UpdateUserDto } from './dto/UpdateUser.dto';
 
 @Injectable()
-export class UsersService {
+export class UserService {
   constructor(
     private hashService: HashService,
     private prisma: PrismaService,
   ) {}
-  getAllUsers(query: any) {
-    return this.prisma.user.findMany();
+  getAllUser(query: any) {
+    return this.prisma.user.findMany({
+      include: {
+        branch: true,
+      },
+    });
   }
-  async createUser(user: CreateUserDto) {
-    void 0;
+  async createUser(user: CreateUserDto): Promise<User> {
+    return this.prisma.user.create({
+      data: {
+        ...user,
+        password: await this.hashService.hash(user.password),
+        role: ROLES.USER,
+      } as Prisma.UserCreateInput,
+    });
   }
   getUserById(id: string) {
     return this.prisma.user.findUnique({ where: { id: +id } });
   }
 
-  updateUserById(id: string, body: CreateUserDto) {
+  updateUserById(id: string, body: UpdateUserDto) {
     return this.prisma.user.update({
       where: { id: +id },
-      data: body,
+      data: body as Prisma.UserUpdateInput,
     });
   }
 

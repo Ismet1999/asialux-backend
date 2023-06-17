@@ -20,26 +20,27 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/CreateUser.dto';
-import { User } from '@prisma/client';
-
-import { UsersService } from './user.service';
+import { UserService } from './user.service';
 import { ROLES, SETTINGS } from './user.utils';
+import { User } from './user.entity';
+import { Prisma } from '@prisma/client';
+import { UpdateUserDto } from './dto/UpdateUser.dto';
 @ApiTags('User')
-@Controller('users')
-export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
-  @ApiOperation({ summary: 'Get all users' })
+@Controller('user')
+export class UserController {
+  constructor(private readonly userService: UserService) {}
+  @ApiOperation({ summary: 'Get all user' })
   @ApiResponse({
     status: 200,
     type: [User],
-    description: 'The list of users',
+    description: 'The list of user',
   })
   // @ApiBearerAuth()
   // @Roles('admin')
   // @UseGuards(JwtAuthGuard, RolesGuard)
   @Get('/')
-  findAllUsers(query: any) {
-    return this.usersService.getAllUsers(query);
+  findAllUser(query: any) {
+    return this.userService.getAllUser(query);
   }
 
   @ApiOperation({ summary: 'Get a user' })
@@ -50,7 +51,7 @@ export class UsersController {
   @Get('/:id')
   async getUserById(@Param('id') id: string) {
     try {
-      const res = await this.usersService.getUserById(id);
+      const res = await this.userService.getUserById(id);
       if (!res) throw new NotFoundException();
       return res;
     } catch (error) {
@@ -66,16 +67,16 @@ export class UsersController {
     createUserDto: CreateUserDto,
   ) {
     try {
-      if (!createUserDto.email && !createUserDto.phone_number) {
-        throw new BadRequestException('Email or phone number is required');
-      }
-      //  check if user exists by email or phone number
-      const user = await this.usersService.getUserByEmailOrPhone(
-        createUserDto.email,
-        createUserDto.phone_number,
-      );
-      if (user) throw new BadRequestException('User already exists');
-      const res = await this.usersService.createUser(createUserDto);
+      // if (!createUserDto.email && !createUserDto.phone_number) {
+      //   throw new BadRequestException('Email or phone number is required');
+      // }
+      // //  check if user exists by email or phone number
+      // const user = await this.userService.getUserByEmailOrPhone(
+      //   createUserDto.email,
+      //   createUserDto.phone_number,
+      // );
+      // if (user) throw new BadRequestException('User already exists');
+      const res = await this.userService.createUser(createUserDto);
       return res;
     } catch (error) {
       throw new BadRequestException('User not created:' + error.message);
@@ -87,7 +88,7 @@ export class UsersController {
   @Patch('/:id')
   async updateUserRoleById(@Param('id') id: string) {
     try {
-      const res = await this.usersService.patchUserById(id, {
+      const res = await this.userService.patchUserById(id, {
         role: ROLES.ADMIN,
       });
       if (!res) throw new NotFoundException();
@@ -106,10 +107,10 @@ export class UsersController {
   updateUser(
     @Param('id') id: string,
     @Body(SETTINGS.VALIDATION_PIPE)
-    createUserDto: CreateUserDto,
+    updateUserDto: UpdateUserDto,
   ) {
     try {
-      const res = this.usersService.updateUserById(id, createUserDto);
+      const res = this.userService.updateUserById(id, updateUserDto);
       if (!res) throw new NotFoundException();
       return res;
     } catch (error) {
@@ -124,6 +125,6 @@ export class UsersController {
   // @UseGuards(JwtAuthGuard, RolesGuard)
   @Delete('/:id')
   deleteUser(@Param('id') id: string) {
-    return this.usersService.deleteUserById(id);
+    return this.userService.deleteUserById(id);
   }
 }

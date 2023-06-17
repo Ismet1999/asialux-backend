@@ -1,34 +1,32 @@
-import { ApiParam, ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
+import { ApiProperty, OmitType } from '@nestjs/swagger';
+import { CreateUserDto } from './CreateUser.dto';
 import {
   ArrayMinSize,
   IsArray,
   IsBoolean,
-  IsEmail,
-  IsNotEmpty,
   IsOptional,
-  IsPhoneNumber,
   IsString,
   IsStrongPassword,
-  ValidateNested,
 } from 'class-validator';
-import { Match } from 'src/decorators/match.decorator';
 import { ROLES } from '../user.utils';
 
-export class CreateUserDto {
+// export class UpdateUserDto extends CreateUserDto {}
+
+export class UpdateUserDto {
   @ApiProperty({ example: 'John Doe', description: 'User fullName' })
   @IsOptional()
   @IsString({ message: 'fullName must be a valid string' })
   fullName: string;
 
   @ApiProperty({ example: [' +998 99 999 99 99'], description: 'User phone' })
+  @IsOptional()
   @IsArray({ message: 'phone must be a valid array' })
   @ArrayMinSize(1)
   @IsString({ each: true, message: 'phone must be a valid string' })
   phone: string[];
 
   // @ApiProperty({ example: 1 })
-  // @IsNotEmpty({ message: 'branch is required' })
+  // @IsOptional({ message: 'branch is required' })
   // branch: number;
 
   @ApiProperty({
@@ -41,7 +39,7 @@ export class CreateUserDto {
     example: 'password',
     description: 'User password',
   })
-  @IsNotEmpty({ message: 'Password is required' })
+  @IsOptional()
   @IsStrongPassword(
     {
       minLength: 8,
@@ -58,7 +56,7 @@ export class CreateUserDto {
   //   example: 'password',
   //   description: 'User password confirmation',
   // })
-  // @IsNotEmpty({ message: 'Password confirmation is required' })
+  // @IsOptional({ message: 'Password confirmation is required' })
   // @Match('password', { message: 'Passwords do not match' })
   // passwordConfirmation: string;
 
@@ -66,21 +64,21 @@ export class CreateUserDto {
     example: 'passportSeries',
     description: 'User passportSeries',
   })
-  @IsNotEmpty({ message: 'passportSeries is required' })
+  @IsOptional()
   passportSeries: string;
 
   @ApiProperty({
     example: 1,
     description: 'User branchId',
   })
-  @IsNotEmpty({ message: 'branchId is required' })
+  @IsOptional()
   branchId: number;
 
   @ApiProperty({
     example: ROLES.USER,
     description: 'User role',
   })
-  @IsNotEmpty({ message: 'role is required' })
+  @IsOptional()
   role: string;
 
   @ApiProperty({
@@ -88,6 +86,10 @@ export class CreateUserDto {
     description: 'User status',
   })
   @IsOptional()
-  @IsBoolean({ message: 'status must be a valid boolean' })
+  @IsBoolean()
   status: boolean;
 }
+// export class UpdateUserDto extends OmitType(CreateUserDto, [
+//   'password',
+//   'role',
+// ] as const) {}

@@ -28,7 +28,7 @@ model User {
   password       String
   phone          String[]
   passportSeries String    @unique
-  branch         Branch    @relation(fields: [branchId], references: [id])
+  branch         Branch?   @relation(fields: [branchId], references: [id])
   branchId       Int
   createdAt      DateTime  @default(now())
   status         Boolean   @default(true)

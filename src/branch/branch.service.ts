@@ -1,23 +1,21 @@
 import { SETTINGS } from 'src/app.utils';
 import { CreateBranchDto } from './dto/CreateBranch.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class BranchService {
   constructor(private prisma: PrismaService) {}
 
   getAllBranch(query: any) {
-    return this.prisma.branch.findMany({
-      skip: query.skip || SETTINGS.DEFAULT_SKIP,
-      take: query.take || SETTINGS.DEFAULT_TAKE,
-      orderBy: query.orderBy || SETTINGS.DEFAULT_ORDER_BY,
-    });
+    return this.prisma.branch.findMany();
   }
   getBranchById(id: string) {
     return this.prisma.branch.findUnique({ where: { id: +id } });
   }
 
-  createBranch(user: CreateBranchDto) {
-    return this.prisma.branch.create({ data: user });
+  createBranch(branch: CreateBranchDto) {
+    return this.prisma.branch.create({ data: branch });
   }
 
   updateBranchById(id: string, body: CreateBranchDto) {
