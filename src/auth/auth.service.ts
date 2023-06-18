@@ -5,22 +5,22 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { HashService } from '../users/hash.service';
-import { Users } from '../users/users.schema';
-import { UsersService } from '../users/users.service';
+import { HashService } from '../user/hash.service';
+import { User } from '../user/user.entity';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private userService: UsersService,
+    private userService: UserService,
     private hashService: HashService,
     private jwtService: JwtService,
   ) {}
   async validateUserCredentials(
     login: string,
     password: string,
-  ): Promise<Users | Error> {
-    const user = await this.userService.getUserByEmailOrPhone(login, login);
+  ): Promise<User | Error> {
+    const user = await this.userService.getUserByPassportSeries(login);
     if (!user) throw new NotFoundException('User not found');
     const valid = await this.hashService.comparePassword(
       password,
@@ -31,13 +31,12 @@ export class AuthService {
 
     return user;
   }
-  async generateToken(user: Users) {
+  async generateToken(user: User) {
     // Generate JWT token here
     const userData = {
-      _id: user._id,
-      email: user.email,
-      name: user.name,
-      phone_number: user.phone_number,
+      id: user.id,
+      login: user.fullName,
+      photo: user.photo,
       role: user.role,
     };
     return {

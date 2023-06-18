@@ -1,6 +1,6 @@
 import { Controller, HttpCode, Post, Request, UseGuards } from '@nestjs/common';
 import { Body } from '@nestjs/common/decorators';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/Login.Dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
@@ -17,9 +17,10 @@ export class AuthController {
     return this.authService.generateToken(req.user);
   }
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Post('me')
-  async test(@Request() req) {
+  test(@Request() req) {
     return req.user;
   }
 }
