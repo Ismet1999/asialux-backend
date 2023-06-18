@@ -6,9 +6,17 @@ import { UsersModule } from './user/user.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { ClientModule } from './client/client.module';
+import { CurrencyModule } from './currency/currency.module';
 
 @Module({
-  imports: [AuthModule, BranchModule, UsersModule, PrismaModule, ClientModule],
+  imports: [
+    AuthModule,
+    UsersModule,
+    ClientModule,
+    BranchModule,
+    PrismaModule,
+    CurrencyModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

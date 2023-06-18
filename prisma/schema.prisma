@@ -41,7 +41,7 @@ model User {
 model Client {
   id             Int       @id @default(autoincrement())
   fullName       String
-  phone   String[]
+  phone          String[]
   passportSeries String    @unique
   createdAt      DateTime  @default(now())
   request        Request[]
@@ -132,7 +132,7 @@ model Currency {
   id        Int      @id @default(autoincrement())
   currency  String
   createdAt DateTime @default(now())
-  date      DateTime @unique
+  date      String   @unique
   value     Int
 }
 

@@ -13,7 +13,7 @@ CREATE TABLE "User" (
     "photo" TEXT,
     "fullName" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "phone" TEXT NOT NULL,
+    "phone" TEXT[],
     "passportSeries" TEXT NOT NULL,
     "branchId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -28,7 +28,7 @@ CREATE TABLE "User" (
 CREATE TABLE "Client" (
     "id" SERIAL NOT NULL,
     "fullName" TEXT NOT NULL,
-    "phoneNumbers" TEXT[],
+    "phone" TEXT[],
     "passportSeries" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -121,7 +121,7 @@ CREATE TABLE "Currency" (
     "id" SERIAL NOT NULL,
     "currency" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "date" TIMESTAMP(3) NOT NULL,
+    "date" TEXT NOT NULL,
     "value" INTEGER NOT NULL,
 
     CONSTRAINT "Currency_pkey" PRIMARY KEY ("id")
