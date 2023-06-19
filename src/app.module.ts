@@ -9,6 +9,7 @@ import { ClientModule } from './client/client.module';
 import { CurrencyModule } from './currency/currency.module';
 import { OrderModule } from './order/order.module';
 import { OrderTourModule } from './orderTour/orderTour.module';
+import { OrderTicketModule } from './orderTicket/orderTicket.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { OrderTourModule } from './orderTour/orderTour.module';
     BranchModule,
     OrderModule,
     OrderTourModule,
+    OrderTicketModule,
     CurrencyModule,
   ],
   controllers: [AppController],
