@@ -1,18 +1,14 @@
-import { ApiParam, ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
+
 import {
   ArrayMinSize,
   IsArray,
   IsBoolean,
-  IsEmail,
   IsNotEmpty,
   IsOptional,
-  IsPhoneNumber,
   IsString,
   IsStrongPassword,
-  ValidateNested,
 } from 'class-validator';
-import { Match } from 'src/decorators/match.decorator';
 import { ROLES } from '../user.utils';
 
 export class CreateUserDto {

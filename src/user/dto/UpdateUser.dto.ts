@@ -1,5 +1,4 @@
-import { ApiProperty, OmitType } from '@nestjs/swagger';
-import { CreateUserDto } from './CreateUser.dto';
+import { ApiProperty } from '@nestjs/swagger';
 import {
   ArrayMinSize,
   IsArray,
