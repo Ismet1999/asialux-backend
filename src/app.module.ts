@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { ClientModule } from './client/client.module';
 import { CurrencyModule } from './currency/currency.module';
 import { OrderModule } from './order/order.module';
+import { OrderTourModule } from './orderTour/orderTour.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { OrderModule } from './order/order.module';
     ClientModule,
     BranchModule,
     OrderModule,
+    OrderTourModule,
     CurrencyModule,
   ],
   controllers: [AppController],
