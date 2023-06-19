@@ -1,4 +1,5 @@
 import { Invoice as InvoiceModel } from '@prisma/client';
+import { InvoiceStatus } from './invoice.type';
 
 export class Invoice implements InvoiceModel {
   id: string;
@@ -6,7 +7,7 @@ export class Invoice implements InvoiceModel {
   orderId: string;
   clientId: string;
   invoiceAmount: number;
-  invoiceStatus: string;
+  status: InvoiceStatus;
   branchId: string;
   userId: string;
 }

@@ -5,7 +5,7 @@ export class UpdateInvoiceDto {
   // orderId: string;
   // clientId: string;
   // invoiceAmount: number;
-  // invoiceStatus: string;
+  // status: string;
   // branchId: string;
   // userId: string;
 
@@ -39,7 +39,7 @@ export class UpdateInvoiceDto {
   })
   @IsOptional({ message: 'invoice status is required' })
   @IsString({ message: 'invoice status must be a valid string' })
-  invoiceStatus: string;
+  status: string;
 
   @ApiProperty({
     example: '1',

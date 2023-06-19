@@ -1,11 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { InvoiceStatus } from '../invoice.type';
 
 export class CreateInvoiceDto {
   // orderId: string;
   // clientId: string;
   // invoiceAmount: number;
-  // invoiceStatus: string;
+  // status: string;
   // branchId: string;
   // userId: string;
 
@@ -34,12 +35,12 @@ export class CreateInvoiceDto {
   invoiceAmount: number;
 
   @ApiProperty({
-    example: '1',
+    example: InvoiceStatus.PENDING,
     description: 'invoice status',
   })
   @IsNotEmpty({ message: 'invoice status is required' })
-  @IsString({ message: 'invoice status must be a valid string' })
-  invoiceStatus: string;
+  @IsEnum(InvoiceStatus)
+  status: InvoiceStatus;
 
   @ApiProperty({
     example: '1',
