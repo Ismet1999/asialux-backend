@@ -1,15 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsDateString, IsOptional, IsNumber, IsString } from 'class-validator';
-import { ORDER_TYPE } from '../order.utils';
+import { OrderType } from '../order.utils';
 
 export class UpdateOrderDto {
   @ApiProperty({
-    example: ORDER_TYPE.Tour,
+    example: OrderType.Tour,
     description: 'order type  (tour, ticket, visa)',
   })
   @IsOptional()
   @IsString({ message: 'order must be a valid string' })
-  type: ORDER_TYPE;
+  type: OrderType;
 
   @ApiProperty({
     example: '1',

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsDateString, IsNotEmpty, IsNumber, IsString } from 'class-validator';
-import { ORDER_TYPE } from '../order.utils';
+import { OrderType } from '../order.utils';
 
 export class CreateOrderDto {
   // type: string;
@@ -10,12 +10,12 @@ export class CreateOrderDto {
   // price: number;
 
   @ApiProperty({
-    example: ORDER_TYPE.Tour,
+    example: OrderType.Tour,
     description: 'order type  (tour, ticket, visa)',
   })
   @IsNotEmpty({ message: 'order is required' })
   @IsString({ message: 'order must be a valid string' })
-  type: ORDER_TYPE;
+  type: OrderType;
 
   @ApiProperty({
     example: '1',

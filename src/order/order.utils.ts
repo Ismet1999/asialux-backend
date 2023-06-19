@@ -1,5 +1,5 @@
 // tour, ticket, visa
-export enum ORDER_TYPE {
+export enum OrderType {
   Tour = 'tour',
   Ticket = 'ticket',
   Visa = 'visa',
