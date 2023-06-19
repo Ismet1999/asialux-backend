@@ -26,6 +26,7 @@ import { CreateCurrencyDto } from './dto/CreateCurrency.dto';
 import { CurrencyService } from './currency.service';
 import { SETTINGS } from 'src/app.utils';
 import { Currency } from './currency.entity';
+import { UpdateCurrencyDto } from './dto/UpdateCUrrency.dto';
 // import { RolesGuard } from '../auth/roles.guard';
 // import { Roles } from '../auth/roles.decorator';
 
@@ -86,7 +87,7 @@ export class CurrencyController {
   async updateCurrency(
     @Param('id') id: string,
     @Body(SETTINGS.VALIDATION_PIPE)
-    updateCurrencyDto: CreateCurrencyDto,
+    updateCurrencyDto: UpdateCurrencyDto,
   ) {
     try {
       const res = await this.currencyService.updateCurrencyById(

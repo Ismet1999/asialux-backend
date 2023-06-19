@@ -26,6 +26,7 @@ import { CreateBranchDto } from './dto/CreateBranch.dto';
 import { BranchService } from './branch.service';
 import { SETTINGS } from 'src/app.utils';
 import { Branch } from './branch.entity';
+import { UpdateBranchDto } from './dto/UpdateBranch.dto';
 // import { RolesGuard } from '../auth/roles.guard';
 // import { Roles } from '../auth/roles.decorator';
 
@@ -86,7 +87,7 @@ export class BranchController {
   async updateBranch(
     @Param('id') id: string,
     @Body(SETTINGS.VALIDATION_PIPE)
-    updateBranchDto: CreateBranchDto,
+    updateBranchDto: UpdateBranchDto,
   ) {
     try {
       const res = await this.branchService.updateBranchById(

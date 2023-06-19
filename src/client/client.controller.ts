@@ -26,6 +26,7 @@ import { CreateClientDto } from './dto/CreateClient.dto';
 import { ClientService } from './client.service';
 import { SETTINGS } from 'src/app.utils';
 import { Client } from './client.entity';
+import { UpdateClientDto } from './dto/UpdateClient.dto';
 // import { RolesGuard } from '../auth/roles.guard';
 // import { Roles } from '../auth/roles.decorator';
 
@@ -86,7 +87,7 @@ export class ClientController {
   async updateClient(
     @Param('id') id: string,
     @Body(SETTINGS.VALIDATION_PIPE)
-    updateClientDto: CreateClientDto,
+    updateClientDto: UpdateClientDto,
   ) {
     try {
       const res = await this.clientService.updateClientById(

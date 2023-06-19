@@ -25,7 +25,7 @@ export class UserService {
         ...user,
         password: await this.hashService.hash(user.password),
         role: ROLES.USER,
-      } as Prisma.UserCreateInput,
+      },
     });
   }
   getUserById(id: string) {
@@ -35,7 +35,7 @@ export class UserService {
   updateUserById(id: string, body: UpdateUserDto) {
     return this.prisma.user.update({
       where: { id: +id },
-      data: body as Prisma.UserUpdateInput,
+      data: body,
     });
   }
 

@@ -7,14 +7,16 @@ import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { ClientModule } from './client/client.module';
 import { CurrencyModule } from './currency/currency.module';
+import { OrderModule } from './order/order.module';
 
 @Module({
   imports: [
+    PrismaModule,
     AuthModule,
     UsersModule,
     ClientModule,
     BranchModule,
-    PrismaModule,
+    OrderModule,
     CurrencyModule,
   ],
   controllers: [AppController],

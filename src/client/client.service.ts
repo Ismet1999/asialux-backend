@@ -3,6 +3,7 @@ import { CreateClientDto } from './dto/CreateClient.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import { UpdateClientDto } from './dto/UpdateClient.dto';
 
 @Injectable()
 export class ClientService {
@@ -17,11 +18,11 @@ export class ClientService {
 
   createClient(client: CreateClientDto) {
     return this.prisma.client.create({
-      data: client as Prisma.ClientCreateInput,
+      data: client,
     });
   }
 
-  updateClientById(id: string, body: CreateClientDto) {
+  updateClientById(id: string, body: UpdateClientDto) {
     return this.prisma.client.update({
       where: { id: +id },
       data: body,
