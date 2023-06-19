@@ -36,6 +36,7 @@ model User {
   superAdmin     Boolean   @default(false)
   order          Order[]
   invoice        Invoice[]
+  Payment        Payment[]
 }
 
 model Client {
@@ -126,6 +127,8 @@ model Payment {
   paymentAmount Int // only dollar
   branch        Branch?  @relation(fields: [branchId], references: [id])
   branchId      String
+  user          User?    @relation(fields: [userId], references: [id])
+  userId        String
 }
 
 model Currency {
