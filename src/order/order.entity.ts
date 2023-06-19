@@ -1,11 +1,11 @@
 import { Order as OrderModel } from '@prisma/client';
 
 export class Order implements OrderModel {
-  id: number;
+  id: string;
   type: string;
   createdAt: Date;
-  clientId: number;
-  userId: number;
-  branchId: number;
+  clientId: string;
+  userId: string;
+  branchId: string;
   price: number;
 }

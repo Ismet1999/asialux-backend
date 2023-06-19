@@ -13,7 +13,7 @@ export class ClientService {
     return this.prisma.client.findMany();
   }
   getClientById(id: string) {
-    return this.prisma.client.findUnique({ where: { id: +id } });
+    return this.prisma.client.findUnique({ where: { id } });
   }
 
   createClient(client: CreateClientDto) {
@@ -24,12 +24,12 @@ export class ClientService {
 
   updateClientById(id: string, body: UpdateClientDto) {
     return this.prisma.client.update({
-      where: { id: +id },
+      where: { id },
       data: body,
     });
   }
 
   deleteClientById(id: string) {
-    return this.prisma.client.delete({ where: { id: +id } });
+    return this.prisma.client.delete({ where: { id } });
   }
 }

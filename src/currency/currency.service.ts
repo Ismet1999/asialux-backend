@@ -12,7 +12,7 @@ export class CurrencyService {
     return this.prisma.currency.findMany();
   }
   getCurrencyById(id: string) {
-    return this.prisma.currency.findUnique({ where: { id: +id } });
+    return this.prisma.currency.findUnique({ where: { id } });
   }
 
   createCurrency(currency: CreateCurrencyDto) {
@@ -21,12 +21,12 @@ export class CurrencyService {
 
   updateCurrencyById(id: string, body: UpdateCurrencyDto) {
     return this.prisma.currency.update({
-      where: { id: +id },
+      where: { id },
       data: body,
     });
   }
 
   deleteCurrencyById(id: string) {
-    return this.prisma.currency.delete({ where: { id: +id } });
+    return this.prisma.currency.delete({ where: { id } });
   }
 }

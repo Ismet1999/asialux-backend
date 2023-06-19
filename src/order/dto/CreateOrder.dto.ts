@@ -11,9 +11,9 @@ import { ORDER_TYPE } from '../order.utils';
 
 export class CreateOrderDto {
   // type: string;
-  // clientId: number;
-  // userId: number;
-  // branchId: number;
+  // clientId: string;
+  // userId: string;
+  // branchId: string;
   // price: number;
 
   @ApiProperty({
@@ -25,28 +25,28 @@ export class CreateOrderDto {
   type: ORDER_TYPE;
 
   @ApiProperty({
-    example: 1,
+    example: '1',
     description: 'client id',
   })
   @IsNotEmpty({ message: 'client id is required' })
-  @IsNumber({}, { message: 'client id must be a valid number' })
-  clientId: number;
+  @IsString({ message: 'client id must be a valid string' })
+  clientId: string;
 
   @ApiProperty({
-    example: 1,
+    example: '1',
     description: 'user id',
   })
   @IsNotEmpty({ message: 'user id is required' })
-  @IsNumber({}, { message: 'user id must be a valid number' })
-  userId: number;
+  @IsString({ message: 'user id must be a valid string' })
+  userId: string;
 
   @ApiProperty({
-    example: 1,
+    example: '1',
     description: 'branch id',
   })
   @IsNotEmpty({ message: 'branch id is required' })
-  @IsNumber({}, { message: 'branch id must be a valid number' })
-  branchId: number;
+  @IsString({ message: 'branch id must be a valid string' })
+  branchId: string;
 
   @ApiProperty({
     example: 100,

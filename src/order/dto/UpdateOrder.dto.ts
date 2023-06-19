@@ -12,28 +12,28 @@ export class UpdateOrderDto {
   type: ORDER_TYPE;
 
   @ApiProperty({
-    example: 1,
+    example: '1',
     description: 'client id',
   })
   @IsOptional()
-  @IsNumber({}, { message: 'client id must be a valid number' })
-  clientId: number;
+  @IsString({ message: 'client id must be a valid string' })
+  clientId: string;
 
   @ApiProperty({
-    example: 1,
+    example: '1',
     description: 'user id',
   })
   @IsOptional()
-  @IsNumber({}, { message: 'user id must be a valid number' })
-  userId: number;
+  @IsString({ message: 'user id must be a valid string' })
+  userId: string;
 
   @ApiProperty({
-    example: 1,
+    example: '1',
     description: 'branch id',
   })
   @IsOptional()
-  @IsNumber({}, { message: 'branch id must be a valid number' })
-  branchId: number;
+  @IsString({ message: 'branch id must be a valid string' })
+  branchId: string;
 
   @ApiProperty({
     example: 100,

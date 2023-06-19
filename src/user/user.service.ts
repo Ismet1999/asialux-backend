@@ -29,24 +29,24 @@ export class UserService {
     });
   }
   getUserById(id: string) {
-    return this.prisma.user.findUnique({ where: { id: +id } });
+    return this.prisma.user.findUnique({ where: { id } });
   }
 
   updateUserById(id: string, body: UpdateUserDto) {
     return this.prisma.user.update({
-      where: { id: +id },
+      where: { id },
       data: body,
     });
   }
 
   patchUserById(id: string, body: any) {
     return this.prisma.user.update({
-      where: { id: +id },
+      where: { id },
       data: body,
     });
   }
   deleteUserById(id: string) {
-    return this.prisma.user.delete({ where: { id: +id } });
+    return this.prisma.user.delete({ where: { id } });
   }
 
   getUserByPassportSeries(passport: string) {

@@ -13,7 +13,7 @@ export class OrderService {
     return this.prisma.order.findMany();
   }
   getOrderById(id: string) {
-    return this.prisma.order.findUnique({ where: { id: +id } });
+    return this.prisma.order.findUnique({ where: { id } });
   }
 
   createOrder(order: CreateOrderDto) {
@@ -22,12 +22,12 @@ export class OrderService {
 
   updateOrderById(id: string, body: UpdateOrderDto) {
     return this.prisma.order.update({
-      where: { id: +id },
+      where: { id },
       data: body,
     });
   }
 
   deleteOrderById(id: string) {
-    return this.prisma.order.delete({ where: { id: +id } });
+    return this.prisma.order.delete({ where: { id } });
   }
 }

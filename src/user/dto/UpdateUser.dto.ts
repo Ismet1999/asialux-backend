@@ -4,6 +4,7 @@ import {
   ArrayMinSize,
   IsArray,
   IsBoolean,
+  IsEnum,
   IsOptional,
   IsString,
   IsStrongPassword,
@@ -50,6 +51,7 @@ export class UpdateUserDto {
     },
     { message: 'Password is too weak' },
   )
+  @IsString({ message: 'Password must be a valid string' })
   password: string;
 
   // @ApiProperty({
@@ -65,6 +67,7 @@ export class UpdateUserDto {
     description: 'User passportSeries',
   })
   @IsOptional()
+  @IsString({ message: 'passportSeries must be a valid string' })
   passportSeries: string;
 
   @ApiProperty({
@@ -72,13 +75,15 @@ export class UpdateUserDto {
     description: 'User branchId',
   })
   @IsOptional()
-  branchId: number;
+  @IsString({ message: 'branchId must be a valid string' })
+  branchId: string;
 
   @ApiProperty({
     example: ROLES.USER,
     description: 'User role',
   })
   @IsOptional()
+  @IsEnum(ROLES)
   role: string;
 
   @ApiProperty({

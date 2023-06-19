@@ -12,7 +12,7 @@ export class BranchService {
     return this.prisma.branch.findMany();
   }
   getBranchById(id: string) {
-    return this.prisma.branch.findUnique({ where: { id: +id } });
+    return this.prisma.branch.findUnique({ where: { id } });
   }
 
   createBranch(branch: CreateBranchDto) {
@@ -21,12 +21,12 @@ export class BranchService {
 
   updateBranchById(id: string, body: UpdateBranchDto) {
     return this.prisma.branch.update({
-      where: { id: +id },
+      where: { id },
       data: body,
     });
   }
 
   deleteBranchById(id: string) {
-    return this.prisma.branch.delete({ where: { id: +id } });
+    return this.prisma.branch.delete({ where: { id } });
   }
 }

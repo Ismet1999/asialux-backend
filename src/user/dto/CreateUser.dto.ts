@@ -52,6 +52,7 @@ export class CreateUserDto {
     },
     { message: 'Password is too weak' },
   )
+  @IsString({ message: 'Password must be a valid string' })
   password: string;
 
   // @ApiProperty({
@@ -67,20 +68,23 @@ export class CreateUserDto {
     description: 'User passportSeries',
   })
   @IsNotEmpty({ message: 'passportSeries is required' })
+  @IsString({ message: 'passportSeries must be a valid string' })
   passportSeries: string;
 
   @ApiProperty({
-    example: 1,
+    example: '1',
     description: 'User branchId',
   })
   @IsNotEmpty({ message: 'branchId is required' })
-  branchId: number;
+  @IsString({ message: 'branchId must be a valid string' })
+  branchId: string;
 
   @ApiProperty({
     example: ROLES.USER,
     description: 'User role',
   })
   @IsNotEmpty({ message: 'role is required' })
+  @IsString({ message: 'role must be a valid string' })
   role: string;
 
   @ApiProperty({

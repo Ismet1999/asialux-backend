@@ -1,7 +1,7 @@
 import { Client as ClientModel } from '@prisma/client';
 
 export class Client implements ClientModel {
-  id: number;
+  id: string;
   fullName: string;
   phone: string[];
   passportSeries: string;

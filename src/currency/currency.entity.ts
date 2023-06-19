@@ -1,7 +1,7 @@
 import { Currency as CurrencyModel } from '@prisma/client';
 
 export class Currency implements CurrencyModel {
-  id: number;
+  id: string;
   currency: string;
   createdAt: Date;
   date: string;
