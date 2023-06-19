@@ -16,7 +16,7 @@ model Branch {
   name      String    @unique
   createdAt DateTime  @default(now())
   user      User[]
-  request   Request[]
+  order     Order[]
   invoice   Invoice[]
   payment   Payment[]
 }
@@ -34,7 +34,7 @@ model User {
   status         Boolean   @default(true)
   role           String?
   superAdmin     Boolean   @default(false)
-  request        Request[]
+  order          Order[]
   invoice        Invoice[]
 }
 
@@ -44,32 +44,32 @@ model Client {
   phone          String[]
   passportSeries String    @unique
   createdAt      DateTime  @default(now())
-  request        Request[]
+  order          Order[]
   invoice        Invoice[]
 }
 
-model Request {
-  id            Int            @id @default(autoincrement())
-  type          String // tour, ticket, visa
-  createdAt     DateTime       @default(now())
-  client        Client         @relation(fields: [clientId], references: [id])
-  clientId      Int
-  user          User           @relation(fields: [userId], references: [id])
-  userId        Int
-  branch        Branch         @relation(fields: [branchId], references: [id])
-  branchId      Int
-  b2cPrice      Int
-  requestTour   RequestTour?
-  requestTicket RequestTicket?
-  requestVisa   RequestVisa?
-  invoice       Invoice?
+model Order {
+  id          Int          @id @default(autoincrement())
+  type        String // tour, ticket, visa
+  createdAt   DateTime     @default(now())
+  client      Client       @relation(fields: [clientId], references: [id])
+  clientId    Int
+  user        User         @relation(fields: [userId], references: [id])
+  userId      Int
+  branch      Branch       @relation(fields: [branchId], references: [id])
+  branchId    Int
+  price       Int
+  orderTour   OrderTour?
+  orderTicket OrderTicket?
+  orderVisa   OrderVisa?
+  invoice     Invoice?
 }
 
-model RequestTour {
+model OrderTour {
   id              Int      @id @default(autoincrement())
   createdAt       DateTime @default(now())
-  request         Request  @relation(fields: [requestId], references: [id])
-  requestId       Int      @unique
+  order           Order    @relation(fields: [orderId], references: [id])
+  orderId         Int      @unique
   ticketId        String
   tourId          String
   tourDestination String
@@ -78,11 +78,11 @@ model RequestTour {
   b2cPrice        Int
 }
 
-model RequestTicket {
+model OrderTicket {
   id                Int      @id @default(autoincrement())
   createdAt         DateTime @default(now())
-  request           Request  @relation(fields: [requestId], references: [id])
-  requestId         Int      @unique
+  order             Order    @relation(fields: [orderId], references: [id])
+  orderId           Int      @unique
   ticketId          String
   ticketDestination String
   flightDate        DateTime
@@ -90,11 +90,11 @@ model RequestTicket {
   b2cPrice          Int
 }
 
-model RequestVisa {
+model OrderVisa {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
-  request   Request  @relation(fields: [requestId], references: [id])
-  requestId Int      @unique
+  order     Order    @relation(fields: [orderId], references: [id])
+  orderId   Int      @unique
   visaId    String
   b2cPrice  Int
 }
@@ -102,8 +102,8 @@ model RequestVisa {
 model Invoice {
   id            Int       @id @default(autoincrement())
   createdAt     DateTime  @default(now())
-  request       Request   @relation(fields: [requestId], references: [id])
-  requestId     Int       @unique
+  order         Order     @relation(fields: [orderId], references: [id])
+  orderId       Int       @unique
   client        Client    @relation(fields: [clientId], references: [id])
   clientId      Int
   invoiceAmount Int

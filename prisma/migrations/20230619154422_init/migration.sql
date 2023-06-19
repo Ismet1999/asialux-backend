@@ -36,23 +36,23 @@ CREATE TABLE "Client" (
 );
 
 -- CreateTable
-CREATE TABLE "Request" (
+CREATE TABLE "Order" (
     "id" SERIAL NOT NULL,
     "type" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "clientId" INTEGER NOT NULL,
     "userId" INTEGER NOT NULL,
     "branchId" INTEGER NOT NULL,
-    "b2cPrice" INTEGER NOT NULL,
+    "price" INTEGER NOT NULL,
 
-    CONSTRAINT "Request_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "RequestTour" (
+CREATE TABLE "OrderTour" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "requestId" INTEGER NOT NULL,
+    "orderId" INTEGER NOT NULL,
     "ticketId" TEXT NOT NULL,
     "tourId" TEXT NOT NULL,
     "tourDestination" TEXT NOT NULL,
@@ -60,39 +60,39 @@ CREATE TABLE "RequestTour" (
     "b2bPrice" INTEGER NOT NULL,
     "b2cPrice" INTEGER NOT NULL,
 
-    CONSTRAINT "RequestTour_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "OrderTour_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "RequestTicket" (
+CREATE TABLE "OrderTicket" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "requestId" INTEGER NOT NULL,
+    "orderId" INTEGER NOT NULL,
     "ticketId" TEXT NOT NULL,
     "ticketDestination" TEXT NOT NULL,
     "flightDate" TIMESTAMP(3) NOT NULL,
     "b2bPrice" INTEGER NOT NULL,
     "b2cPrice" INTEGER NOT NULL,
 
-    CONSTRAINT "RequestTicket_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "OrderTicket_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "RequestVisa" (
+CREATE TABLE "OrderVisa" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "requestId" INTEGER NOT NULL,
+    "orderId" INTEGER NOT NULL,
     "visaId" TEXT NOT NULL,
     "b2cPrice" INTEGER NOT NULL,
 
-    CONSTRAINT "RequestVisa_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "OrderVisa_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Invoice" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "requestId" INTEGER NOT NULL,
+    "orderId" INTEGER NOT NULL,
     "clientId" INTEGER NOT NULL,
     "invoiceAmount" INTEGER NOT NULL,
     "invoiceStatus" TEXT NOT NULL,
@@ -137,16 +137,16 @@ CREATE UNIQUE INDEX "User_passportSeries_key" ON "User"("passportSeries");
 CREATE UNIQUE INDEX "Client_passportSeries_key" ON "Client"("passportSeries");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "RequestTour_requestId_key" ON "RequestTour"("requestId");
+CREATE UNIQUE INDEX "OrderTour_orderId_key" ON "OrderTour"("orderId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "RequestTicket_requestId_key" ON "RequestTicket"("requestId");
+CREATE UNIQUE INDEX "OrderTicket_orderId_key" ON "OrderTicket"("orderId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "RequestVisa_requestId_key" ON "RequestVisa"("requestId");
+CREATE UNIQUE INDEX "OrderVisa_orderId_key" ON "OrderVisa"("orderId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Invoice_requestId_key" ON "Invoice"("requestId");
+CREATE UNIQUE INDEX "Invoice_orderId_key" ON "Invoice"("orderId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Currency_date_key" ON "Currency"("date");
@@ -155,25 +155,25 @@ CREATE UNIQUE INDEX "Currency_date_key" ON "Currency"("date");
 ALTER TABLE "User" ADD CONSTRAINT "User_branchId_fkey" FOREIGN KEY ("branchId") REFERENCES "Branch"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Request" ADD CONSTRAINT "Request_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "Client"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Order" ADD CONSTRAINT "Order_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "Client"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Request" ADD CONSTRAINT "Request_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Order" ADD CONSTRAINT "Order_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Request" ADD CONSTRAINT "Request_branchId_fkey" FOREIGN KEY ("branchId") REFERENCES "Branch"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Order" ADD CONSTRAINT "Order_branchId_fkey" FOREIGN KEY ("branchId") REFERENCES "Branch"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "RequestTour" ADD CONSTRAINT "RequestTour_requestId_fkey" FOREIGN KEY ("requestId") REFERENCES "Request"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "OrderTour" ADD CONSTRAINT "OrderTour_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "Order"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "RequestTicket" ADD CONSTRAINT "RequestTicket_requestId_fkey" FOREIGN KEY ("requestId") REFERENCES "Request"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "OrderTicket" ADD CONSTRAINT "OrderTicket_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "Order"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "RequestVisa" ADD CONSTRAINT "RequestVisa_requestId_fkey" FOREIGN KEY ("requestId") REFERENCES "Request"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "OrderVisa" ADD CONSTRAINT "OrderVisa_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "Order"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Invoice" ADD CONSTRAINT "Invoice_requestId_fkey" FOREIGN KEY ("requestId") REFERENCES "Request"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Invoice" ADD CONSTRAINT "Invoice_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "Order"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Invoice" ADD CONSTRAINT "Invoice_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "Client"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
