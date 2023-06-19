@@ -12,7 +12,7 @@ datasource db {
 
 // tour agency
 model Branch {
-  id        Int       @id @default(autoincrement())
+  id        String    @id @default(uuid())
   name      String    @unique
   createdAt DateTime  @default(now())
   user      User[]
@@ -22,14 +22,14 @@ model Branch {
 }
 
 model User {
-  id             Int       @id @default(autoincrement())
+  id             String    @id @default(uuid())
   photo          String?
   fullName       String
   password       String
   phone          String[]
   passportSeries String    @unique
   branch         Branch?   @relation(fields: [branchId], references: [id])
-  branchId       Int
+  branchId       String
   createdAt      DateTime  @default(now())
   status         Boolean   @default(true)
   role           String?
@@ -39,7 +39,7 @@ model User {
 }
 
 model Client {
-  id             Int       @id @default(autoincrement())
+  id             String    @id @default(uuid())
   fullName       String
   phone          String[]
   passportSeries String    @unique
@@ -49,15 +49,15 @@ model Client {
 }
 
 model Order {
-  id          Int          @id @default(autoincrement())
+  id          String       @id @default(uuid())
   type        String // tour, ticket, visa
   createdAt   DateTime     @default(now())
-  client      Client       @relation(fields: [clientId], references: [id])
-  clientId    Int
-  user        User         @relation(fields: [userId], references: [id])
-  userId      Int
-  branch      Branch       @relation(fields: [branchId], references: [id])
-  branchId    Int
+  client      Client?      @relation(fields: [clientId], references: [id])
+  clientId    String
+  user        User?        @relation(fields: [userId], references: [id])
+  userId      String
+  branch      Branch?      @relation(fields: [branchId], references: [id])
+  branchId    String
   price       Int
   orderTour   OrderTour?
   orderTicket OrderTicket?
@@ -66,10 +66,10 @@ model Order {
 }
 
 model OrderTour {
-  id              Int      @id @default(autoincrement())
+  id              String   @id @default(uuid())
   createdAt       DateTime @default(now())
-  order           Order    @relation(fields: [orderId], references: [id])
-  orderId         Int      @unique
+  order           Order?   @relation(fields: [orderId], references: [id])
+  orderId         String   @unique
   ticketId        String
   tourId          String
   tourDestination String
@@ -79,10 +79,10 @@ model OrderTour {
 }
 
 model OrderTicket {
-  id                Int      @id @default(autoincrement())
+  id                String   @id @default(uuid())
   createdAt         DateTime @default(now())
-  order             Order    @relation(fields: [orderId], references: [id])
-  orderId           Int      @unique
+  order             Order?   @relation(fields: [orderId], references: [id])
+  orderId           String   @unique
   ticketId          String
   ticketDestination String
   flightDate        DateTime
@@ -91,45 +91,45 @@ model OrderTicket {
 }
 
 model OrderVisa {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   createdAt DateTime @default(now())
-  order     Order    @relation(fields: [orderId], references: [id])
-  orderId   Int      @unique
+  order     Order?   @relation(fields: [orderId], references: [id])
+  orderId   String   @unique
   visaId    String
   b2cPrice  Int
 }
 
 model Invoice {
-  id            Int       @id @default(autoincrement())
+  id            String    @id @default(uuid())
   createdAt     DateTime  @default(now())
-  order         Order     @relation(fields: [orderId], references: [id])
-  orderId       Int       @unique
-  client        Client    @relation(fields: [clientId], references: [id])
-  clientId      Int
+  order         Order?    @relation(fields: [orderId], references: [id])
+  orderId       String    @unique
+  client        Client?   @relation(fields: [clientId], references: [id])
+  clientId      String
   invoiceAmount Int
   invoiceStatus String // pending, paid, canceled
   payment       Payment[]
-  branch        Branch    @relation(fields: [branchId], references: [id])
-  branchId      Int
+  branch        Branch?   @relation(fields: [branchId], references: [id])
+  branchId      String
   user          User?     @relation(fields: [userId], references: [id])
-  userId        Int?
+  userId        String
 }
 
 model Payment {
-  id            Int      @id @default(autoincrement())
+  id            String   @id @default(uuid())
   type          String // cash, card, transfer
   rawAmount     Int // amount from client
   rawCurrency   String // currency from client
   createdAt     DateTime @default(now())
-  invoice       Invoice  @relation(fields: [invoiceId], references: [id])
-  invoiceId     Int
+  invoice       Invoice? @relation(fields: [invoiceId], references: [id])
+  invoiceId     String   @unique
   paymentAmount Int // only dollar
-  branch        Branch   @relation(fields: [branchId], references: [id])
-  branchId      Int
+  branch        Branch?  @relation(fields: [branchId], references: [id])
+  branchId      String
 }
 
 model Currency {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   currency  String
   createdAt DateTime @default(now())
   date      String   @unique
@@ -137,7 +137,7 @@ model Currency {
 }
 
 // model Post {
-//   id        Int      @id @default(autoincrement())
+// id             String       @id @default(uuid())
 //   title     String
 //   content   String?
 //   published Boolean? @default(false)
