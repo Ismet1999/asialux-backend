@@ -11,6 +11,7 @@ import { OrderModule } from './order/order.module';
 import { OrderTourModule } from './orderTour/orderTour.module';
 import { OrderTicketModule } from './orderTicket/orderTicket.module';
 import { OrderVisaModule } from './orderVisa/orderVisa.module';
+import { InvoiceModule } from './invoice/invoice.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { OrderVisaModule } from './orderVisa/orderVisa.module';
     OrderTourModule,
     OrderTicketModule,
     OrderVisaModule,
+    InvoiceModule,
     CurrencyModule,
   ],
   controllers: [AppController],
