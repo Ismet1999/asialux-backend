@@ -5,5 +5,7 @@ export class OrderVisa implements OrderVisaModel {
   createdAt: Date;
   orderId: string;
   visaId: string;
+  tourId: string;
+  countPeople: number;
   b2cPrice: number;
 }

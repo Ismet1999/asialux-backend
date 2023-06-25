@@ -24,6 +24,22 @@ export class CreateOrderVisaDto {
 
   @ApiProperty({
     example: '1',
+    description: 'tour id',
+  })
+  @IsNotEmpty({ message: 'tour id is required' })
+  @IsString({ message: 'tour id must be a valid string' })
+  tourId: string;
+
+  @ApiProperty({
+    example: 1,
+    description: 'countPeople price',
+  })
+  @IsNotEmpty({ message: 'countPeople price is required' })
+  @IsNumber({}, { message: 'countPeople price must be a valid number' })
+  countPeople: number;
+
+  @ApiProperty({
+    example: '1',
     description: 'b2c price',
   })
   @IsNotEmpty({ message: 'b2c price is required' })

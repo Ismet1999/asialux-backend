@@ -24,6 +24,22 @@ export class UpdateOrderVisaDto {
 
   @ApiProperty({
     example: '1',
+    description: 'tour id',
+  })
+  @IsOptional()
+  @IsString({ message: 'tour id must be a valid string' })
+  tourId: string;
+
+  @ApiProperty({
+    example: 1,
+    description: 'countPeople price',
+  })
+  @IsOptional()
+  @IsNumber({}, { message: 'countPeople price must be a valid number' })
+  countPeople: number;
+
+  @ApiProperty({
+    example: '1',
     description: 'b2c price',
   })
   @IsOptional()
