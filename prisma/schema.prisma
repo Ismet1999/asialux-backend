@@ -102,12 +102,14 @@ model OrderTicket {
 }
 
 model OrderVisa {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  order     Order?   @relation(fields: [orderId], references: [id])
-  orderId   String   @unique
-  visaId    String
-  b2cPrice  Int
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  order       Order?   @relation(fields: [orderId], references: [id])
+  orderId     String   @unique
+  visaId      String
+  tourId      String
+  countPeople Int
+  b2cPrice    Int
 }
 
 model Invoice {
