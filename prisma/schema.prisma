@@ -11,10 +11,19 @@ datasource db {
 }
 
 // tour agency
+model Company {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  branch    Branch[]
+}
+
 model Branch {
   id        String    @id @default(uuid())
   name      String    @unique
   createdAt DateTime  @default(now())
+  company   Company?  @relation(fields: [companyId], references: [id])
+  companyId String
   user      User[]
   order     Order[]
   invoice   Invoice[]

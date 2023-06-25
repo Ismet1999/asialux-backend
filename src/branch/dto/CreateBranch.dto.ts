@@ -9,4 +9,12 @@ export class CreateBranchDto {
   @IsNotEmpty({ message: 'name is required' })
   @IsString({ message: 'name must be a valid string' })
   name: string;
+
+  @ApiProperty({
+    example: 'companyId',
+    description: 'Branch companyId',
+  })
+  @IsNotEmpty({ message: 'companyId is required' })
+  @IsString({ message: 'companyId must be a valid string' })
+  companyId: string;
 }
