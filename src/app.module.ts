@@ -13,11 +13,13 @@ import { OrderTicketModule } from './orderTicket/orderTicket.module';
 import { OrderVisaModule } from './orderVisa/orderVisa.module';
 import { InvoiceModule } from './invoice/invoice.module';
 import { PaymentModule } from './payment/payment.module';
+import { CompanyModule } from './company/company.module';
 
 @Module({
   imports: [
     PrismaModule,
     AuthModule,
+    CompanyModule,
     UsersModule,
     ClientModule,
     BranchModule,
