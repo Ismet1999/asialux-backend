@@ -1,8 +1,6 @@
 version: '3.2'
 
 services:
-
-
   postgres:
     image: postgres:latest
     restart: always
