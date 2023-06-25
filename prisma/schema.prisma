@@ -60,6 +60,7 @@ model Client {
 
 model Order {
   id          String       @id @default(uuid())
+  orderNumber BigInt       @default(autoincrement())
   type        String // tour, ticket, visa
   createdAt   DateTime     @default(now())
   client      Client?      @relation(fields: [clientId], references: [id])
