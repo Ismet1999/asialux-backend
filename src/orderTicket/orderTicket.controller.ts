@@ -78,7 +78,7 @@ export class OrderTicketController {
   // @UseGuards(JwtAuthGuard, RolesGuard)
   @Post('/')
   async createOrder(
-    @Body(SETTINGS.VALIDATION_PIPE)
+    @Body()
     createOrderDto: CreateOrderTicketDto,
   ) {
     try {
@@ -101,7 +101,7 @@ export class OrderTicketController {
   @Put('/:id')
   async updateOrder(
     @Param('id') id: string,
-    @Body(SETTINGS.VALIDATION_PIPE)
+    @Body()
     updateOrderDto: UpdateOrderTicketDto,
   ) {
     try {

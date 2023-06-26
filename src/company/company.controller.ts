@@ -67,7 +67,7 @@ export class CompanyController {
   // @UseGuards(JwtAuthGuard, RolesGuard)
   @Post('/')
   async createCompany(
-    @Body(SETTINGS.VALIDATION_PIPE)
+    @Body()
     createCompanyDto: CreateCompanyDto,
   ) {
     try {
@@ -86,7 +86,7 @@ export class CompanyController {
   @Put('/:id')
   async updateCompany(
     @Param('id') id: string,
-    @Body(SETTINGS.VALIDATION_PIPE)
+    @Body()
     updateCompanyDto: UpdateCompanyDto,
   ) {
     try {

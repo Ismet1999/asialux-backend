@@ -70,7 +70,7 @@ export class OrderTourController {
   // @UseGuards(JwtAuthGuard, RolesGuard)
   @Post('/')
   async createOrder(
-    @Body(SETTINGS.VALIDATION_PIPE)
+    @Body()
     createOrderDto: CreateOrderTourDto,
   ) {
     try {
@@ -89,7 +89,7 @@ export class OrderTourController {
   @Put('/:id')
   async updateOrder(
     @Param('id') id: string,
-    @Body(SETTINGS.VALIDATION_PIPE)
+    @Body()
     updateOrderDto: UpdateOrderTourDto,
   ) {
     try {

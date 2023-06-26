@@ -67,7 +67,7 @@ export class BranchController {
   // @UseGuards(JwtAuthGuard, RolesGuard)
   @Post('/')
   async createBranch(
-    @Body(SETTINGS.VALIDATION_PIPE)
+    @Body()
     createBranchDto: CreateBranchDto,
   ) {
     try {
@@ -86,7 +86,7 @@ export class BranchController {
   @Put('/:id')
   async updateBranch(
     @Param('id') id: string,
-    @Body(SETTINGS.VALIDATION_PIPE)
+    @Body()
     updateBranchDto: UpdateBranchDto,
   ) {
     try {

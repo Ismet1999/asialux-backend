@@ -14,6 +14,8 @@ import { OrderVisaModule } from './orderVisa/orderVisa.module';
 import { InvoiceModule } from './invoice/invoice.module';
 import { PaymentModule } from './payment/payment.module';
 import { CompanyModule } from './company/company.module';
+import { MulterModule } from '@nestjs/platform-express';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [

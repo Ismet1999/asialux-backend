@@ -67,7 +67,7 @@ export class ClientController {
   // @UseGuards(JwtAuthGuard, RolesGuard)
   @Post('/')
   async createClient(
-    @Body(SETTINGS.VALIDATION_PIPE)
+    @Body()
     createClientDto: CreateClientDto,
   ) {
     try {
@@ -86,7 +86,7 @@ export class ClientController {
   @Put('/:id')
   async updateClient(
     @Param('id') id: string,
-    @Body(SETTINGS.VALIDATION_PIPE)
+    @Body()
     updateClientDto: UpdateClientDto,
   ) {
     try {

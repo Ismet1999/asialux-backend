@@ -12,6 +12,11 @@ import {
   UseGuards,
   UsePipes,
   ValidationPipe,
+  UseInterceptors,
+  UploadedFile,
+  ParseFilePipe,
+  MaxFileSizeValidator,
+  FileTypeValidator,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -21,10 +26,12 @@ import {
 } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/CreateUser.dto';
 import { UserService } from './user.service';
-import { ROLES, SETTINGS } from './user.utils';
+import { ROLES } from './user.utils';
 import { User } from './user.entity';
 import { Prisma } from '@prisma/client';
 import { UpdateUserDto } from './dto/UpdateUser.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { SETTINGS } from 'src/app.utils';
 @ApiTags('User')
 @Controller('user')
 export class UserController {
@@ -62,10 +69,7 @@ export class UserController {
   @ApiOperation({ summary: 'Create a new user' })
   @ApiResponse({ status: 201, type: User, description: 'The user created' })
   @Post('/')
-  async createUser(
-    @Body(SETTINGS.VALIDATION_PIPE)
-    createUserDto: CreateUserDto,
-  ) {
+  async createUser(@Body() createUserDto: CreateUserDto) {
     try {
       // if (!createUserDto.email && !createUserDto.phone_number) {
       //   throw new BadRequestException('Email or phone number is required');
@@ -106,7 +110,7 @@ export class UserController {
   @Put('/:id')
   updateUser(
     @Param('id') id: string,
-    @Body(SETTINGS.VALIDATION_PIPE)
+    @Body()
     updateUserDto: UpdateUserDto,
   ) {
     try {
@@ -116,6 +120,26 @@ export class UserController {
     } catch (error) {
       throw new BadRequestException('User not updated: ' + error.message);
     }
+  }
+
+  @Post(':id/photo')
+  @UseInterceptors(
+    FileInterceptor('photo', {
+      storage: SETTINGS.STORAGE,
+    }),
+  )
+  uploadFile(
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 1000000 }),
+          new FileTypeValidator({ fileType: 'image/*' }),
+        ],
+      }),
+    )
+    photo: Express.Multer.File,
+  ) {
+    console.log(photo);
   }
 
   @ApiOperation({ summary: 'Delete a user' })

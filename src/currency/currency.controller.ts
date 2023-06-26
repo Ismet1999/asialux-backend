@@ -67,7 +67,7 @@ export class CurrencyController {
   // @UseGuards(JwtAuthGuard, RolesGuard)
   @Post('/')
   async createCurrency(
-    @Body(SETTINGS.VALIDATION_PIPE)
+    @Body()
     createCurrencyDto: CreateCurrencyDto,
   ) {
     try {
@@ -86,7 +86,7 @@ export class CurrencyController {
   @Put('/:id')
   async updateCurrency(
     @Param('id') id: string,
-    @Body(SETTINGS.VALIDATION_PIPE)
+    @Body()
     updateCurrencyDto: UpdateCurrencyDto,
   ) {
     try {

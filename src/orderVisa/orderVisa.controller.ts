@@ -70,7 +70,7 @@ export class OrderVisaController {
   // @UseGuards(JwtAuthGuard, RolesGuard)
   @Post('/')
   async createOrder(
-    @Body(SETTINGS.VALIDATION_PIPE)
+    @Body()
     createOrderDto: CreateOrderVisaDto,
   ) {
     try {
@@ -89,7 +89,7 @@ export class OrderVisaController {
   @Put('/:id')
   async updateOrder(
     @Param('id') id: string,
-    @Body(SETTINGS.VALIDATION_PIPE)
+    @Body()
     updateOrderDto: UpdateOrderVisaDto,
   ) {
     try {
