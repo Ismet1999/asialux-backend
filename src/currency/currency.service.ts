@@ -2,7 +2,7 @@ import { SETTINGS } from 'src/app.utils';
 import { CreateCurrencyDto } from './dto/CreateCurrency.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
-import { UpdateCurrencyDto } from './dto/UpdateCUrrency.dto';
+import { UpdateCurrencyDto } from './dto/UpdateCurrency.dto';
 
 @Injectable()
 export class CurrencyService {
