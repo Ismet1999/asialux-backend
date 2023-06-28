@@ -10,7 +10,7 @@ COPY . /app
 
 EXPOSE 3001
 
-# RUN npx prisma migrate dev 
+RUN npx prisma generate
 
 RUN yarn build
 
