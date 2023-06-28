@@ -19,6 +19,14 @@ export class AuthController {
 
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
+  @HttpCode(200)
+  @Post('refresh')
+  async refresh(@Request() req) {
+    return this.authService.generateToken(req.user);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Post('me')
   test(@Request() req) {
     return req.user;

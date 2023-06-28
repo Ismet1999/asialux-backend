@@ -39,10 +39,15 @@ export class AuthService {
       photo: user.photo,
       role: user.role,
     };
+    const access_token = await this.jwtService.signAsync(userData, {
+      expiresIn: '1h',
+    });
+    const refresh_token = await this.jwtService.signAsync(userData, {
+      expiresIn: '1d',
+    });
     return {
-      access_token: await this.jwtService.signAsync(userData, {
-        expiresIn: '1d',
-      }),
+      access_token,
+      refresh_token,
       data: userData,
     };
   }
