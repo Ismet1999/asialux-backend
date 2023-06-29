@@ -38,6 +38,12 @@ export class UserService {
       data: body,
     });
   }
+  updatePhotoUserById(id: string, body: { photo: string }) {
+    return this.prisma.user.update({
+      where: { id },
+      data: body,
+    });
+  }
 
   patchUserById(id: string, body: any) {
     return this.prisma.user.update({

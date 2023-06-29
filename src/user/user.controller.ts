@@ -108,13 +108,13 @@ export class UserController {
   // @Roles('admin')
   // @UseGuards(JwtAuthGuard, RolesGuard)
   @Put('/:id')
-  updateUser(
+  async updateUser(
     @Param('id') id: string,
     @Body()
     updateUserDto: UpdateUserDto,
   ) {
     try {
-      const res = this.userService.updateUserById(id, updateUserDto);
+      const res = await this.userService.updateUserById(id, updateUserDto);
       if (!res) throw new NotFoundException();
       return res;
     } catch (error) {
@@ -125,10 +125,11 @@ export class UserController {
   @Post(':id/photo')
   @UseInterceptors(
     FileInterceptor('photo', {
-      storage: SETTINGS.STORAGE,
+      storage: SETTINGS.STORAGE_PHOTO,
     }),
   )
-  uploadFile(
+  async uploadFile(
+    @Param('id') id: string,
     @UploadedFile(
       new ParseFilePipe({
         validators: [
@@ -139,7 +140,11 @@ export class UserController {
     )
     photo: Express.Multer.File,
   ) {
-    console.log(photo);
+    try {
+      await this.userService.updatePhotoUserById(id, { photo: photo.path });
+    } catch (error) {
+      throw new BadRequestException('User not updated: ' + error.message);
+    }
   }
 
   @ApiOperation({ summary: 'Delete a user' })
