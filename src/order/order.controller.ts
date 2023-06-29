@@ -4,12 +4,16 @@ import {
   Controller,
   Delete,
   Get,
+  MaxFileSizeValidator,
   NotFoundException,
   Param,
+  ParseFilePipe,
   Post,
   Put,
   Query,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -27,6 +31,7 @@ import { OrderService } from './order.service';
 import { SETTINGS } from 'src/app.utils';
 import { Order } from './order.entity';
 import { UpdateOrderDto } from './dto/UpdateOrder.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 // import { RolesGuard } from '../auth/roles.guard';
 // import { Roles } from '../auth/roles.decorator';
 
@@ -95,6 +100,30 @@ export class OrderController {
       return res;
     } catch (error) {
       throw new BadRequestException('Order not updated' + error);
+    }
+  }
+
+  @Post(':id/file')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: SETTINGS.STORAGE_FILE,
+    }),
+  )
+  async uploadFile(
+    @Param('id') id: string,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [new MaxFileSizeValidator({ maxSize: 1000000 })],
+      }),
+    )
+    file: Express.Multer.File,
+  ) {
+    try {
+      await this.orderService.updateFileOrderById(id, {
+        file: file.path,
+      });
+    } catch (error) {
+      throw new BadRequestException('Order not updated: ' + error.message);
     }
   }
 

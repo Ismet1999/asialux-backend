@@ -26,6 +26,12 @@ export class OrderService {
       data: body,
     });
   }
+  updateFileOrderById(id: string, body: { file: string }) {
+    return this.prisma.order.update({
+      where: { id },
+      data: body,
+    });
+  }
 
   deleteOrderById(id: string) {
     return this.prisma.order.delete({ where: { id } });

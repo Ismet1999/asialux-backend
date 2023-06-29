@@ -70,6 +70,7 @@ model Order {
   branch      Branch?      @relation(fields: [branchId], references: [id])
   branchId    String
   price       Int
+  file        String?
   orderTour   OrderTour?
   orderTicket OrderTicket?
   orderVisa   OrderVisa?
