@@ -31,7 +31,7 @@ import { OrderService } from './order.service';
 import { SETTINGS } from 'src/app.utils';
 import { Order } from './order.entity';
 import { UpdateOrderDto } from './dto/UpdateOrder.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FilesInterceptor } from '@nestjs/platform-express';
 // import { RolesGuard } from '../auth/roles.guard';
 // import { Roles } from '../auth/roles.decorator';
 
@@ -103,9 +103,9 @@ export class OrderController {
     }
   }
 
-  @Post(':id/file')
+  @Post(':id/files')
   @UseInterceptors(
-    FileInterceptor('file', {
+    FilesInterceptor('files', 5, {
       storage: SETTINGS.STORAGE_FILE,
     }),
   )
@@ -116,11 +116,11 @@ export class OrderController {
         validators: [new MaxFileSizeValidator({ maxSize: 1000000 })],
       }),
     )
-    file: Express.Multer.File,
+    files: Express.Multer.File[],
   ) {
     try {
       await this.orderService.updateFileOrderById(id, {
-        file: file.path,
+        files: files.map((file) => file.path),
       });
     } catch (error) {
       throw new BadRequestException('Order not updated: ' + error.message);

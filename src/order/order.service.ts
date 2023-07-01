@@ -26,7 +26,7 @@ export class OrderService {
       data: body,
     });
   }
-  updateFileOrderById(id: string, body: { file: string }) {
+  updateFileOrderById(id: string, body: { files: string[] }) {
     return this.prisma.order.update({
       where: { id },
       data: body,

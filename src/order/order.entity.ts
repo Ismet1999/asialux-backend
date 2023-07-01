@@ -9,4 +9,5 @@ export class Order implements OrderModel {
   userId: string;
   branchId: string;
   price: number;
+  files: string[];
 }
