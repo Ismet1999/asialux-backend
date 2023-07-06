@@ -5,7 +5,8 @@ export class User implements UserModel {
   photo: string;
   fullName: string;
   password: string;
-  phone: string[];
+  phones: string[];
+  mainPhone: string;
   passportSeries: string;
   branchId: string;
   createdAt: Date;

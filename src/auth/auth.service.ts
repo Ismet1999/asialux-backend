@@ -20,7 +20,7 @@ export class AuthService {
     login: string,
     password: string,
   ): Promise<User | Error> {
-    const user = await this.userService.getUserByPassportSeries(login);
+    const user = await this.userService.getUserByMainPhone(login);
     if (!user) throw new NotFoundException('User not found');
     const valid = await this.hashService.comparePassword(
       password,

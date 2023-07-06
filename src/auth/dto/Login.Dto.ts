@@ -10,8 +10,8 @@ import {
 export class LoginDto {
   // login
   @ApiProperty({
-    example: 'passportSeries',
-    description: 'User login',
+    example: '+998912345678',
+    description: 'Main phone number',
   })
   @IsNotEmpty({ message: 'login is required' })
   @IsString({ message: 'login must be a valid string' })

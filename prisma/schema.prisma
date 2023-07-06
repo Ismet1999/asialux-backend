@@ -35,7 +35,8 @@ model User {
   photo          String?
   fullName       String
   password       String
-  phone          String[]
+  phones         String[]  @default([])
+  mainPhone      String    @unique
   passportSeries String    @unique
   branch         Branch?   @relation(fields: [branchId], references: [id])
   branchId       String

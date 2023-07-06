@@ -17,11 +17,17 @@ export class CreateUserDto {
   @IsString({ message: 'fullName must be a valid string' })
   fullName: string;
 
-  @ApiProperty({ example: [' +998 99 999 99 99'], description: 'User phone' })
+  @ApiProperty({ example: ['+998 99 999 99 99'], description: 'User phone' })
   @IsArray({ message: 'phone must be a valid array' })
+  @IsOptional()
   @ArrayMinSize(1)
   @IsString({ each: true, message: 'phone must be a valid string' })
-  phone: string[];
+  phones?: string[];
+
+  @ApiProperty({ example: '+998 99 999 99 99', description: 'Main phone' })
+  @IsNotEmpty({ message: 'mainPhone is required' })
+  @IsString({ message: 'phone must be a valid string' })
+  mainPhone: string;
 
   // @ApiProperty({ example: 1 })
   // @IsNotEmpty({ message: 'branch is required' })

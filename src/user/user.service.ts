@@ -72,4 +72,7 @@ export class UserService {
   getUserByPassportSeries(passport: string) {
     return this.prisma.user.findUnique({ where: { passportSeries: passport } });
   }
+  getUserByMainPhone(mainPhone: string) {
+    return this.prisma.user.findUnique({ where: { mainPhone } });
+  }
 }
