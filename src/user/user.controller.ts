@@ -17,6 +17,7 @@ import {
   ParseFilePipe,
   MaxFileSizeValidator,
   FileTypeValidator,
+  Query,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -45,6 +46,10 @@ export class UserController {
   // @ApiBearerAuth()
   // @Roles('admin')
   // @UseGuards(JwtAuthGuard, RolesGuard)
+  @Get('/query')
+  findUsers(@Query('companyId') companyId?: string) {
+    return this.userService.getUsers({ companyId });
+  }
   @Get('/')
   findAllUser(query: any) {
     return this.userService.getAllUser(query);
@@ -93,7 +98,7 @@ export class UserController {
   async updateUserRoleById(@Param('id') id: string) {
     try {
       const res = await this.userService.patchUserById(id, {
-        role: ROLES.ADMIN,
+        role: ROLES.USER,
       });
       if (!res) throw new NotFoundException();
       return res;

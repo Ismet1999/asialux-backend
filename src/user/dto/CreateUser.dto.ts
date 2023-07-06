@@ -81,7 +81,7 @@ export class CreateUserDto {
   })
   @IsNotEmpty({ message: 'role is required' })
   @IsString({ message: 'role must be a valid string' })
-  role: string;
+  role: ROLES;
 
   @ApiProperty({
     example: true,

@@ -12,6 +12,21 @@ export class UserService {
     private hashService: HashService,
     private prisma: PrismaService,
   ) {}
+  getUsers(query: any) {
+    let where = {};
+    if (query.companyId) {
+      where = {
+        ...where,
+        branch: { companyId: query.companyId },
+      };
+    }
+    return this.prisma.user.findMany({
+      where,
+      include: {
+        branch: true,
+      },
+    });
+  }
   getAllUser(query: any) {
     return this.prisma.user.findMany({
       include: {
@@ -24,7 +39,6 @@ export class UserService {
       data: {
         ...user,
         password: await this.hashService.hash(user.password),
-        role: ROLES.USER,
       },
     });
   }
