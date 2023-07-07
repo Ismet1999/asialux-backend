@@ -16,15 +16,16 @@ import { PaymentModule } from './payment/payment.module';
 import { CompanyModule } from './company/company.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { PartnerModule } from './partner/partner.module';
 
 @Module({
   imports: [
     PrismaModule,
     AuthModule,
     CompanyModule,
+    BranchModule,
     UsersModule,
     ClientModule,
-    BranchModule,
     OrderModule,
     OrderTourModule,
     OrderTicketModule,
@@ -32,6 +33,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     InvoiceModule,
     PaymentModule,
     CurrencyModule,
+    PartnerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
