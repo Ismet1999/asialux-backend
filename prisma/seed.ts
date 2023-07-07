@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { HashService } from 'src/user/hash.service';
+import { HashService } from '../src/user/hash.service';
 const prisma = new PrismaClient();
 
 const hashService = new HashService();
@@ -34,7 +34,7 @@ async function main() {
       branchId: branch.id,
     },
   });
-  console.log('User created', user);
+  console.log('User created (password=password) ', user);
 }
 main()
   .then(async () => {
