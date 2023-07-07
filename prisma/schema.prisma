@@ -153,6 +153,14 @@ model Currency {
   value     Int
 }
 
+model Partner {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  name      String   @unique
+  link      String
+  data      Json     @default("{}")
+}
+
 // model Post {
 // id             String       @id @default(uuid())
 //   title     String
