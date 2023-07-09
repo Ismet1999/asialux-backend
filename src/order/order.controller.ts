@@ -105,7 +105,7 @@ export class OrderController {
 
   @Post(':id/files')
   @UseInterceptors(
-    FilesInterceptor('files', 5, {
+    FilesInterceptor('files', 10, {
       storage: SETTINGS.STORAGE_FILE,
     }),
   )
@@ -113,7 +113,7 @@ export class OrderController {
     @Param('id') id: string,
     @UploadedFile(
       new ParseFilePipe({
-        validators: [new MaxFileSizeValidator({ maxSize: 1000000 })],
+        validators: [new MaxFileSizeValidator({ maxSize: 10 })],
       }),
     )
     files: Express.Multer.File[],
