@@ -29,7 +29,11 @@ export class OrderService {
   updateFileOrderById(id: string, body: { files: string[] }) {
     return this.prisma.order.update({
       where: { id },
-      data: body,
+      data: {
+        files: {
+          push: body.files,
+        },
+      },
     });
   }
 
