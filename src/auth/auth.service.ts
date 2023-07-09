@@ -38,6 +38,7 @@ export class AuthService {
       login: user.fullName,
       photo: user.photo,
       role: user.role,
+      branchId: user.branchId,
     };
     const access_token = await this.jwtService.signAsync(userData, {
       expiresIn: '1h',
