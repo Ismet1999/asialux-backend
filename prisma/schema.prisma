@@ -122,7 +122,7 @@ model Invoice {
   client        Client?   @relation(fields: [clientId], references: [id])
   clientId      String
   invoiceAmount Int
-  status        String // pending, paid, canceled
+  // status        String // pending, paid, canceled
   payment       Payment[]
   branch        Branch?   @relation(fields: [branchId], references: [id])
   branchId      String
@@ -135,6 +135,7 @@ model Payment {
   type          String // cash, card, transfer
   rawAmount     Int // amount from client
   rawCurrency   String // currency from client
+  status        String // pending, paid, canceled
   createdAt     DateTime @default(now())
   invoice       Invoice? @relation(fields: [invoiceId], references: [id])
   invoiceId     String   @unique

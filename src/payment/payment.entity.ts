@@ -3,10 +3,11 @@ import { PaymentType } from './payment.type';
 
 export class Payment implements PaymentModel {
   id: string;
-  createdAt: Date;
-  type: PaymentType;
+  type: string;
   rawAmount: number;
   rawCurrency: string;
+  status: string;
+  createdAt: Date;
   invoiceId: string;
   paymentAmount: number;
   branchId: string;

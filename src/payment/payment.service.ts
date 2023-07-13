@@ -4,6 +4,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { UpdatePaymentDto } from './dto/UpdatePayment.dto';
+import { PaymentStatus } from './payment.type';
 
 @Injectable()
 export class PaymentService {
@@ -18,7 +19,7 @@ export class PaymentService {
 
   createOrder(order: CreatePaymentDto) {
     return this.prisma.payment.create({
-      data: order,
+      data: { ...order, status: PaymentStatus.PENDING },
     });
   }
 

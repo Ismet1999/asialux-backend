@@ -7,7 +7,6 @@ export class Invoice implements InvoiceModel {
   orderId: string;
   clientId: string;
   invoiceAmount: number;
-  status: InvoiceStatus;
   branchId: string;
   userId: string;
 }

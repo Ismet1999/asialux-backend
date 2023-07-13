@@ -35,14 +35,6 @@ export class CreateInvoiceDto {
   invoiceAmount: number;
 
   @ApiProperty({
-    example: InvoiceStatus.PENDING,
-    description: 'invoice status',
-  })
-  @IsNotEmpty({ message: 'invoice status is required' })
-  @IsEnum(InvoiceStatus)
-  status: InvoiceStatus;
-
-  @ApiProperty({
     example: '1',
     description: 'branch id',
   })

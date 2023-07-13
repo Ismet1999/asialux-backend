@@ -4,3 +4,10 @@ export enum PaymentType {
   CARD = 'card',
   TRANSFER = 'transfer',
 }
+
+export enum PaymentStatus {
+  // pending, success, rejected
+  PENDING = 'pending',
+  SUCCESS = 'success',
+  REJECTED = 'rejected',
+}

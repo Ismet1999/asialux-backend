@@ -35,14 +35,6 @@ export class UpdateInvoiceDto {
 
   @ApiProperty({
     example: '1',
-    description: 'invoice status',
-  })
-  @IsOptional({ message: 'invoice status is required' })
-  @IsString({ message: 'invoice status must be a valid string' })
-  status: string;
-
-  @ApiProperty({
-    example: '1',
     description: 'branch id',
   })
   @IsOptional({ message: 'branch id is required' })
