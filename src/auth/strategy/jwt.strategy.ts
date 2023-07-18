@@ -1,6 +1,7 @@
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { User } from '../../user/user.entity';
+import { ReqData } from '../auth.type';
 
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor() {
@@ -10,10 +11,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: User) {
+  validate(payload: User): ReqData['user'] {
     return {
       id: payload.id,
-      login: payload.fullName,
+      fullName: payload.fullName,
       photo: payload.photo,
       role: payload.role,
       branchId: payload.branchId,

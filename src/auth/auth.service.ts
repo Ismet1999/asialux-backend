@@ -8,6 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import { HashService } from '../user/hash.service';
 import { User } from '../user/user.entity';
 import { UserService } from '../user/user.service';
+import { ReqData } from './auth.type';
 
 @Injectable()
 export class AuthService {
@@ -31,11 +32,11 @@ export class AuthService {
 
     return user;
   }
-  async generateToken(user: User) {
+  async generateToken(user: ReqData['user']) {
     // Generate JWT token here
-    const userData = {
+    const userData: ReqData['user'] = {
       id: user.id,
-      login: user.fullName,
+      fullName: user.fullName,
       photo: user.photo,
       role: user.role,
       branchId: user.branchId,
