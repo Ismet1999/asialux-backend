@@ -83,7 +83,7 @@ export class UpdateUserDto {
   })
   @IsOptional()
   @IsEnum(ROLES)
-  role: string;
+  role: ROLES;
 
   @ApiProperty({
     example: true,

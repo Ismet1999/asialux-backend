@@ -46,13 +46,23 @@ export class UserController {
   // @ApiBearerAuth()
   // @Roles('admin')
   // @UseGuards(JwtAuthGuard, RolesGuard)
-  @Get('/query')
-  findUsers(@Query('companyId') companyId?: string) {
-    return this.userService.getUsers({ companyId });
-  }
+  // @Get('/query')
+  // findUsers(@Query('companyId') companyId?: string) {
+  //   return this.userService.getUsers({ companyId });
+  // }
   @Get('/')
   findAllUser(query: any) {
     return this.userService.getAllUser(query);
+  }
+
+  @ApiOperation({ summary: 'Get a roles' })
+  @ApiResponse({ status: 200, type: [String], description: 'The roles' })
+  // @ApiBearerAuth()
+  // @Roles('admin')
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  @Get('/roles')
+  async getRoles() {
+    return Object.values(ROLES);
   }
 
   @ApiOperation({ summary: 'Get a user' })
@@ -92,20 +102,20 @@ export class UserController {
     }
   }
   // update user role by id
-  @ApiOperation({ summary: 'Update a user role' })
-  @ApiResponse({ status: 200, type: User, description: 'The user updated' })
-  @Patch('/:id')
-  async updateUserRoleById(@Param('id') id: string) {
-    try {
-      const res = await this.userService.patchUserById(id, {
-        role: ROLES.USER,
-      });
-      if (!res) throw new NotFoundException();
-      return res;
-    } catch (error) {
-      throw new BadRequestException('User not updated: ' + error.message);
-    }
-  }
+  // @ApiOperation({ summary: 'Update a user role' })
+  // @ApiResponse({ status: 200, type: User, description: 'The user updated' })
+  // @Patch('/:id')
+  // async updateUserRoleById(@Param('id') id: string) {
+  //   try {
+  //     const res = await this.userService.patchUserById(id, {
+  //       role: ROLES.USER,
+  //     });
+  //     if (!res) throw new NotFoundException();
+  //     return res;
+  //   } catch (error) {
+  //     throw new BadRequestException('User not updated: ' + error.message);
+  //   }
+  // }
 
   @ApiOperation({ summary: 'Update a user' })
   @ApiResponse({ status: 200, type: User, description: 'The user updated' })

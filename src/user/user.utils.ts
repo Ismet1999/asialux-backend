@@ -4,4 +4,5 @@
 // guest
 export enum ROLES {
   USER = 'user',
+  CASHIER = 'cashier',
 }
