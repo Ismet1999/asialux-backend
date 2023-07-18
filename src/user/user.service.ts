@@ -42,6 +42,10 @@ export class UserService {
       },
     });
   }
+
+  createManyUser(users: CreateUserDto[]) {
+    return this.prisma.user.createMany({ data: users, skipDuplicates: true });
+  }
   getUserById(id: string) {
     return this.prisma.user.findUnique({ where: { id } });
   }

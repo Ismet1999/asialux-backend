@@ -18,6 +18,7 @@ import {
   MaxFileSizeValidator,
   FileTypeValidator,
   Query,
+  ParseArrayPipe,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -101,6 +102,31 @@ export class UserController {
       throw new BadRequestException('User not created:' + error.message);
     }
   }
+
+  @ApiOperation({ summary: 'Create a new many user' })
+  @ApiResponse({ status: 201, type: [User], description: 'The users created' })
+  @Post('/many')
+  async createManyUser(
+    @Body(new ParseArrayPipe({ items: CreateUserDto }))
+    createUserDto: CreateUserDto[],
+  ) {
+    try {
+      // if (!createUserDto.email && !createUserDto.phone_number) {
+      //   throw new BadRequestException('Email or phone number is required');
+      // }
+      // //  check if user exists by email or phone number
+      // const user = await this.userService.getUserByEmailOrPhone(
+      //   createUserDto.email,
+      //   createUserDto.phone_number,
+      // );
+      // if (user) throw new BadRequestException('User already exists');
+      const res = await this.userService.createManyUser(createUserDto);
+      return res;
+    } catch (error) {
+      throw new BadRequestException('User not created:' + error.message);
+    }
+  }
+
   // update user role by id
   // @ApiOperation({ summary: 'Update a user role' })
   // @ApiResponse({ status: 200, type: User, description: 'The user updated' })
