@@ -16,18 +16,23 @@ export class ClientService {
     return this.prisma.client.findUnique({ where: { id } });
   }
 
-  createClient(client: CreateClientDto) {
+  createClient(client: CreateClientDto, userId: string) {
     return this.prisma.client.create({
-      data: client,
+      data: {
+        ...client,
+        userId,
+      },
     });
   }
-  createManyClient(clients: CreateClientDto[]) {
+  createManyClient(clients: CreateClientDto[], userId: string) {
     // return this.prisma.client.createMany({
     //   data: clients,
     //   skipDuplicates: true,
     // });
     return this.prisma.$transaction(
-      clients.map((client) => this.prisma.client.create({ data: client })),
+      clients.map((client) =>
+        this.prisma.client.create({ data: { ...client, userId } }),
+      ),
     );
   }
 

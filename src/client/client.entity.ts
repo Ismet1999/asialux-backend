@@ -6,4 +6,5 @@ export class Client implements ClientModel {
   phone: string[];
   passportSeries: string;
   createdAt: Date;
+  userId: string;
 }

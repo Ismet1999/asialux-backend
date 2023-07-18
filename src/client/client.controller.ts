@@ -10,6 +10,7 @@ import {
   Post,
   Put,
   Query,
+  Request,
   UseGuards,
   UsePipes,
   ValidationPipe,
@@ -28,6 +29,10 @@ import { ClientService } from './client.service';
 import { SETTINGS } from 'src/app.utils';
 import { Client } from './client.entity';
 import { UpdateClientDto } from './dto/UpdateClient.dto';
+import { Roles } from 'src/decorators/roles.decorator';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/roles.guard';
+import { ROLES } from 'src/user/user.utils';
 // import { RolesGuard } from '../auth/roles.guard';
 // import { Roles } from '../auth/roles.decorator';
 
@@ -63,16 +68,20 @@ export class ClientController {
 
   @ApiOperation({ summary: 'Create a new client' })
   @ApiResponse({ status: 201, type: Client, description: 'The client' })
-  // @ApiBearerAuth()
-  // @Roles('admin')
-  // @UseGuards(JwtAuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @Roles(ROLES.USER)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Post('/')
   async createClient(
     @Body()
     createClientDto: CreateClientDto,
+    @Request() req,
   ) {
     try {
-      const res = await this.clientService.createClient(createClientDto);
+      const res = await this.clientService.createClient(
+        createClientDto,
+        req.user.id,
+      );
       return res;
     } catch (error) {
       throw new BadRequestException(error);
@@ -88,9 +97,13 @@ export class ClientController {
   async createManyClient(
     @Body(new ParseArrayPipe({ items: CreateClientDto }))
     createClientDto: CreateClientDto[],
+    @Request() req,
   ) {
     try {
-      const res = await this.clientService.createManyClient(createClientDto);
+      const res = await this.clientService.createManyClient(
+        createClientDto,
+        req.user.id,
+      );
       return res;
     } catch (error) {
       throw new BadRequestException('Clients not created:' + error.message);
@@ -99,9 +112,9 @@ export class ClientController {
 
   @ApiOperation({ summary: 'Update a client' })
   @ApiResponse({ status: 200, type: Client, description: 'The client' })
-  // @ApiBearerAuth()
-  // @Roles('admin')
-  // @UseGuards(JwtAuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @Roles(ROLES.USER)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Put('/:id')
   async updateClient(
     @Param('id') id: string,
@@ -122,9 +135,9 @@ export class ClientController {
 
   @ApiOperation({ summary: 'Delete a client' })
   @ApiResponse({ status: 204, description: 'The client' })
-  // @ApiBearerAuth()
-  // @Roles('admin')
-  // @UseGuards(JwtAuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @Roles(ROLES.USER)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Delete('/:id')
   deleteClient(@Param('id') id: string) {
     return this.clientService.deleteClientById(id);
