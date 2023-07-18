@@ -11,6 +11,7 @@ async function bootstrap() {
     new ValidationPipe({
       errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
       transform: true,
+      // transformOptions: { enableImplicitConversion: true },
     }),
   );
 

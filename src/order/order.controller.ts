@@ -32,6 +32,7 @@ import { SETTINGS } from 'src/app.utils';
 import { Order } from './order.entity';
 import { UpdateOrderDto } from './dto/UpdateOrder.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
+import { FindOrderDto } from './dto/FindOrder.dto';
 // import { RolesGuard } from '../auth/roles.guard';
 // import { Roles } from '../auth/roles.decorator';
 
@@ -47,7 +48,7 @@ export class OrderController {
   })
   // @UseGuards(JwtAuthGuard)
   @Get('/')
-  findAllOrder(@Query() query: any) {
+  findAllOrder(@Query() query: FindOrderDto) {
     return this.orderService.getAllOrder(query);
   }
 
