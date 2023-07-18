@@ -17,6 +17,7 @@ import { CompanyModule } from './company/company.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PartnerModule } from './partner/partner.module';
+import { TicketModule } from './ticket/ticket.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { PartnerModule } from './partner/partner.module';
     OrderTourModule,
     OrderTicketModule,
     OrderVisaModule,
+    TicketModule,
     InvoiceModule,
     PaymentModule,
     CurrencyModule,
