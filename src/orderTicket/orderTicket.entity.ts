@@ -7,6 +7,4 @@ export class OrderTicket implements OrderTicketModel {
   ticketId: string;
   ticketDestination: string;
   flightDate: Date;
-  b2bPrice: number;
-  b2cPrice: number;
 }

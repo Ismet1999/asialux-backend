@@ -44,20 +44,4 @@ export class UpdateOrderTourDto {
     { message: 'flight date must be a valid date (YYYY-MM-DD )' },
   )
   flightDate: Date;
-
-  @ApiProperty({
-    example: 100,
-    description: 'b2b price',
-  })
-  @IsOptional()
-  @IsNumber({}, { message: 'b2b price must be a valid number' })
-  b2bPrice: number;
-
-  @ApiProperty({
-    example: 100,
-    description: 'b2c price',
-  })
-  @IsOptional()
-  @IsNumber({}, { message: 'b2c price must be a valid number' })
-  b2cPrice: number;
 }

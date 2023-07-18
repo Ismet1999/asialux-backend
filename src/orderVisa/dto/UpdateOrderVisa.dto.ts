@@ -37,12 +37,4 @@ export class UpdateOrderVisaDto {
   @IsOptional()
   @IsNumber({}, { message: 'countPeople price must be a valid number' })
   countPeople: number;
-
-  @ApiProperty({
-    example: '1',
-    description: 'b2c price',
-  })
-  @IsOptional()
-  @IsNumber({}, { message: 'b2c price must be a valid number' })
-  b2cPrice: number;
 }

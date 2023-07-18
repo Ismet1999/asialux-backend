@@ -8,6 +8,4 @@ export class OrderTour implements OrderTourModel {
   tourId: string;
   tourDestination: string;
   flightDate: Date;
-  b2bPrice: number;
-  b2cPrice: number;
 }

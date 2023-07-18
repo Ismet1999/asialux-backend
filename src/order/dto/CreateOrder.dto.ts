@@ -43,11 +43,19 @@ export class CreateOrderDto {
 
   @ApiProperty({
     example: 100,
-    description: 'price',
+    description: 'b2bPrice',
   })
-  @IsNotEmpty({ message: 'price is required' })
-  @IsNumber({}, { message: 'price must be a valid number' })
-  price: number;
+  @IsNotEmpty({ message: 'b2bPrice is required' })
+  @IsNumber({}, { message: 'b2bPrice must be a valid number' })
+  b2bPrice: number;
+
+  @ApiProperty({
+    example: 100,
+    description: 'b2cPrice',
+  })
+  @IsNotEmpty({ message: 'b2cPrice is required' })
+  @IsNumber({}, { message: 'b2cPrice must be a valid number' })
+  b2cPrice: number;
 
   @ApiProperty({
     example: '2021-09-01',

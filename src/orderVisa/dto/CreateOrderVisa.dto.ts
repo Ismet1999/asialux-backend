@@ -37,12 +37,4 @@ export class CreateOrderVisaDto {
   @IsNotEmpty({ message: 'countPeople price is required' })
   @IsNumber({}, { message: 'countPeople price must be a valid number' })
   countPeople: number;
-
-  @ApiProperty({
-    example: '1',
-    description: 'b2c price',
-  })
-  @IsNotEmpty({ message: 'b2c price is required' })
-  @IsNumber({}, { message: 'b2c price must be a valid number' })
-  b2cPrice: number;
 }

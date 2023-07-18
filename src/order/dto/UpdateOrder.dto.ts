@@ -37,11 +37,19 @@ export class UpdateOrderDto {
 
   @ApiProperty({
     example: 100,
-    description: 'price',
+    description: 'b2bPrice',
   })
   @IsOptional()
-  @IsNumber({}, { message: 'price must be a valid number' })
-  price: number;
+  @IsNumber({}, { message: 'b2bPrice must be a valid number' })
+  b2bPrice: number;
+
+  @ApiProperty({
+    example: 100,
+    description: 'b2cPrice',
+  })
+  @IsOptional()
+  @IsNumber({}, { message: 'b2cPrice must be a valid number' })
+  b2cPrice: number;
 
   @ApiProperty({
     example: '2021-09-01',

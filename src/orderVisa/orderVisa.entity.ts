@@ -7,5 +7,4 @@ export class OrderVisa implements OrderVisaModel {
   visaId: string;
   tourId: string;
   countPeople: number;
-  b2cPrice: number;
 }

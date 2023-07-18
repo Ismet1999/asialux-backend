@@ -46,7 +46,7 @@ model User {
   superAdmin     Boolean   @default(false)
   order          Order[]
   invoice        Invoice[]
-  Payment        Payment[]
+  payment        Payment[]
 }
 
 model Client {
@@ -57,6 +57,8 @@ model Client {
   createdAt      DateTime  @default(now())
   order          Order[]
   invoice        Invoice[]
+  ticket         Ticket[]
+  visa           Visa[]
 }
 
 model Order {
@@ -70,7 +72,8 @@ model Order {
   userId      String
   branch      Branch?      @relation(fields: [branchId], references: [id])
   branchId    String
-  price       Int
+  b2bPrice    Int
+  b2cPrice    Int
   files       String[]     @default([])
   orderTour   OrderTour?
   orderTicket OrderTicket?
@@ -87,8 +90,7 @@ model OrderTour {
   tourId          String
   tourDestination String
   flightDate      DateTime
-  b2bPrice        Int
-  b2cPrice        Int
+  ticket          Ticket[]
 }
 
 model OrderTicket {
@@ -99,8 +101,7 @@ model OrderTicket {
   ticketId          String
   ticketDestination String
   flightDate        DateTime
-  b2bPrice          Int
-  b2cPrice          Int
+  ticket            Ticket[]
 }
 
 model OrderVisa {
@@ -111,7 +112,29 @@ model OrderVisa {
   visaId      String
   tourId      String
   countPeople Int
-  b2cPrice    Int
+  visa        Visa[]
+}
+
+model Ticket {
+  id            String       @id @default(uuid())
+  createdAt     DateTime     @default(now())
+  orderTour     OrderTour?   @relation(fields: [orderTourId], references: [id])
+  orderTourId   String? 
+  ticketId      String       @unique
+  client        Client?      @relation(fields: [clientId], references: [id])
+  clientId      String
+  orderTicket   OrderTicket? @relation(fields: [orderTicketId], references: [id])
+  orderTicketId String?
+}
+
+model Visa {
+  id          String     @id @default(uuid())
+  createdAt   DateTime   @default(now())
+  visaId      String     @unique
+  client      Client?    @relation(fields: [clientId], references: [id])
+  clientId    String
+  orderVisa   OrderVisa? @relation(fields: [orderVisaId], references: [id])
+  orderVisaId String
 }
 
 model Invoice {
