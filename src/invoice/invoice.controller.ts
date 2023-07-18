@@ -9,6 +9,7 @@ import {
   Post,
   Put,
   Query,
+  Request,
   UseGuards,
   UsePipes,
   ValidationPipe,
@@ -27,6 +28,11 @@ import { InvoiceService } from './invoice.service';
 import { SETTINGS } from 'src/app.utils';
 import { Invoice } from './invoice.entity';
 import { UpdateInvoiceDto } from './dto/UpdateInvoice.dto';
+import { Roles } from 'src/decorators/roles.decorator';
+import { ROLES } from 'src/user/user.utils';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/roles.guard';
+import { ReqData } from 'src/auth/auth.type';
 // import { RolesGuard } from '../auth/roles.guard';
 // import { Roles } from '../auth/roles.decorator';
 
@@ -65,16 +71,20 @@ export class InvoiceController {
 
   @ApiOperation({ summary: 'Create a new invoice' })
   @ApiResponse({ status: 201, type: Invoice, description: 'The invoice' })
-  // @ApiBearerAuth()
-  // @Roles('admin')
-  // @UseGuards(JwtAuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @Roles(ROLES.USER)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Post('/')
   async createOrder(
     @Body()
     createOrderDto: CreateInvoiceDto,
+    @Request() req: ReqData,
   ) {
     try {
-      const res = await this.invoiceService.createOrder(createOrderDto);
+      const res = await this.invoiceService.createOrder(
+        createOrderDto,
+        req.user,
+      );
       return res;
     } catch (error) {
       throw new BadRequestException(error);

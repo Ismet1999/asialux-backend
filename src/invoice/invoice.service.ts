@@ -4,6 +4,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { UpdateInvoiceDto } from './dto/UpdateInvoice.dto';
+import { ReqData } from 'src/auth/auth.type';
 
 @Injectable()
 export class InvoiceService {
@@ -16,9 +17,9 @@ export class InvoiceService {
     return this.prisma.invoice.findUnique({ where: { id } });
   }
 
-  createOrder(order: CreateInvoiceDto) {
+  createOrder(order: CreateInvoiceDto, user: ReqData['user']) {
     return this.prisma.invoice.create({
-      data: order,
+      data: { ...order, branchId: user.branchId, userId: user.id },
     });
   }
 
