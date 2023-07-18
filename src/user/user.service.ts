@@ -44,7 +44,9 @@ export class UserService {
   }
 
   createManyUser(users: CreateUserDto[]) {
-    return this.prisma.user.createMany({ data: users, skipDuplicates: true });
+    return this.prisma.$transaction(
+      users.map((user) => this.prisma.user.create({ data: user })),
+    );
   }
   getUserById(id: string) {
     return this.prisma.user.findUnique({ where: { id } });

@@ -19,10 +19,9 @@ export class TicketService {
     return this.prisma.ticket.create({ data: ticket });
   }
   createManyTicket(tickets: CreateTicketDto[]) {
-    return this.prisma.ticket.createMany({
-      data: tickets,
-      skipDuplicates: true,
-    });
+    return this.prisma.$transaction(
+      tickets.map((ticket) => this.prisma.ticket.create({ data: ticket })),
+    );
   }
 
   updateTicketById(id: string, body: UpdateTicketDto) {

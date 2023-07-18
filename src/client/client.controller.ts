@@ -6,6 +6,7 @@ import {
   Get,
   NotFoundException,
   Param,
+  ParseArrayPipe,
   Post,
   Put,
   Query,
@@ -75,6 +76,24 @@ export class ClientController {
       return res;
     } catch (error) {
       throw new BadRequestException(error);
+    }
+  }
+  @ApiOperation({ summary: 'Create a new many client' })
+  @ApiResponse({
+    status: 201,
+    type: [Client],
+    description: 'The client created',
+  })
+  @Post('/many')
+  async createManyClient(
+    @Body(new ParseArrayPipe({ items: CreateClientDto }))
+    createClientDto: CreateClientDto[],
+  ) {
+    try {
+      const res = await this.clientService.createManyClient(createClientDto);
+      return res;
+    } catch (error) {
+      throw new BadRequestException('Clients not created:' + error.message);
     }
   }
 

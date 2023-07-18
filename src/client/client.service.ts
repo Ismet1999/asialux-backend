@@ -21,6 +21,15 @@ export class ClientService {
       data: client,
     });
   }
+  createManyClient(clients: CreateClientDto[]) {
+    // return this.prisma.client.createMany({
+    //   data: clients,
+    //   skipDuplicates: true,
+    // });
+    return this.prisma.$transaction(
+      clients.map((client) => this.prisma.client.create({ data: client })),
+    );
+  }
 
   updateClientById(id: string, body: UpdateClientDto) {
     return this.prisma.client.update({
