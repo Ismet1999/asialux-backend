@@ -25,21 +25,21 @@ export class CreateOrderDto {
   @IsString({ message: 'client id must be a valid string' })
   clientId: string;
 
-  @ApiProperty({
-    example: '1',
-    description: 'user id',
-  })
-  @IsNotEmpty({ message: 'user id is required' })
-  @IsString({ message: 'user id must be a valid string' })
-  userId: string;
+  // @ApiProperty({
+  //   example: '1',
+  //   description: 'user id',
+  // })
+  // @IsNotEmpty({ message: 'user id is required' })
+  // @IsString({ message: 'user id must be a valid string' })
+  // userId: string;
 
-  @ApiProperty({
-    example: '1',
-    description: 'branch id',
-  })
-  @IsNotEmpty({ message: 'branch id is required' })
-  @IsString({ message: 'branch id must be a valid string' })
-  branchId: string;
+  // @ApiProperty({
+  //   example: '1',
+  //   description: 'branch id',
+  // })
+  // @IsNotEmpty({ message: 'branch id is required' })
+  // @IsString({ message: 'branch id must be a valid string' })
+  // branchId: string;
 
   @ApiProperty({
     example: 100,

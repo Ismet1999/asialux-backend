@@ -11,6 +11,7 @@ import {
   Post,
   Put,
   Query,
+  Request,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -33,6 +34,11 @@ import { Order } from './order.entity';
 import { UpdateOrderDto } from './dto/UpdateOrder.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { FindOrderDto } from './dto/FindOrder.dto';
+import { Roles } from 'src/decorators/roles.decorator';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/roles.guard';
+import { ROLES } from 'src/user/user.utils';
+import { ReqData } from 'src/auth/auth.type';
 // import { RolesGuard } from '../auth/roles.guard';
 // import { Roles } from '../auth/roles.decorator';
 
@@ -68,16 +74,17 @@ export class OrderController {
 
   @ApiOperation({ summary: 'Create a new order' })
   @ApiResponse({ status: 201, type: Order, description: 'The order' })
-  // @ApiBearerAuth()
-  // @Roles('admin')
-  // @UseGuards(JwtAuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @Roles(ROLES.USER)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Post('/')
   async createOrder(
     @Body()
     createOrderDto: CreateOrderDto,
+    @Request() req: ReqData,
   ) {
     try {
-      const res = await this.orderService.createOrder(createOrderDto);
+      const res = await this.orderService.createOrder(createOrderDto, req.user);
       return res;
     } catch (error) {
       throw new BadRequestException(error);
