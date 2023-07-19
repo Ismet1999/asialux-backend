@@ -10,8 +10,10 @@ import { ReqData } from 'src/auth/auth.type';
 export class OrderService {
   constructor(private prisma: PrismaService) {}
 
-  getAllOrder(query: any) {
-    return this.prisma.order.findMany();
+  getAllOrder(where: Prisma.OrderWhereInput) {
+    return this.prisma.order.findMany({
+      where: where,
+    });
   }
   getOrderById(id: string) {
     return this.prisma.order.findUnique({ where: { id } });
