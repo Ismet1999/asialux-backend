@@ -10,27 +10,27 @@ import { ReqData } from 'src/auth/auth.type';
 export class InvoiceService {
   constructor(private prisma: PrismaService) {}
 
-  getAllOrder(query: any) {
-    return this.prisma.invoice.findMany();
+  getAllInvoice(where: Prisma.InvoiceWhereInput) {
+    return this.prisma.invoice.findMany({ where });
   }
-  getOrderById(id: string) {
+  getInvoiceById(id: string) {
     return this.prisma.invoice.findUnique({ where: { id } });
   }
 
-  createOrder(order: CreateInvoiceDto, user: ReqData['user']) {
+  createInvoice(order: CreateInvoiceDto, user: ReqData['user']) {
     return this.prisma.invoice.create({
       data: { ...order, branchId: user.branchId, userId: user.id },
     });
   }
 
-  updateOrderById(id: string, body: UpdateInvoiceDto) {
+  updateInvoiceById(id: string, body: UpdateInvoiceDto) {
     return this.prisma.invoice.update({
       where: { id },
       data: body,
     });
   }
 
-  deleteOrderById(id: string) {
+  deleteInvoiceById(id: string) {
     return this.prisma.invoice.delete({ where: { id } });
   }
 }

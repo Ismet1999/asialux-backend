@@ -33,6 +33,7 @@ import { ROLES } from 'src/user/user.utils';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { ReqData } from 'src/auth/auth.type';
+import { FindInvoiceDto } from './dto/FinInvoice.dto';
 // import { RolesGuard } from '../auth/roles.guard';
 // import { Roles } from '../auth/roles.decorator';
 
@@ -48,8 +49,8 @@ export class InvoiceController {
   })
   // @UseGuards(JwtAuthGuard)
   @Get('/')
-  findAllOrder(@Query() query: any) {
-    return this.invoiceService.getAllOrder(query);
+  findAllInvoice(@Query() query: FindInvoiceDto) {
+    return this.invoiceService.getAllInvoice(query);
   }
 
   @ApiOperation({ summary: 'Get a invoice' })
@@ -59,9 +60,9 @@ export class InvoiceController {
     description: 'The invoice not found',
   })
   @Get('/:id')
-  async getOrderById(@Param('id') id: string) {
+  async getInvoiceById(@Param('id') id: string) {
     try {
-      const invoice = await this.invoiceService.getOrderById(id);
+      const invoice = await this.invoiceService.getInvoiceById(id);
       if (!invoice) throw new NotFoundException('Invoice not found');
       return invoice;
     } catch (error) {
@@ -75,14 +76,14 @@ export class InvoiceController {
   @Roles(ROLES.USER)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Post('/')
-  async createOrder(
+  async createInvoice(
     @Body()
-    createOrderDto: CreateInvoiceDto,
+    createInvoiceDto: CreateInvoiceDto,
     @Request() req: ReqData,
   ) {
     try {
-      const res = await this.invoiceService.createOrder(
-        createOrderDto,
+      const res = await this.invoiceService.createInvoice(
+        createInvoiceDto,
         req.user,
       );
       return res;
@@ -97,13 +98,16 @@ export class InvoiceController {
   // @Roles('admin')
   // @UseGuards(JwtAuthGuard, RolesGuard)
   @Put('/:id')
-  async updateOrder(
+  async updateInvoice(
     @Param('id') id: string,
     @Body()
-    updateOrderDto: UpdateInvoiceDto,
+    updateInvoiceDto: UpdateInvoiceDto,
   ) {
     try {
-      const res = await this.invoiceService.updateOrderById(id, updateOrderDto);
+      const res = await this.invoiceService.updateInvoiceById(
+        id,
+        updateInvoiceDto,
+      );
       if (!res) throw new NotFoundException('Invoice not found');
       return res;
     } catch (error) {
@@ -117,7 +121,7 @@ export class InvoiceController {
   // @Roles('admin')
   // @UseGuards(JwtAuthGuard, RolesGuard)
   @Delete('/:id')
-  deleteOrder(@Param('id') id: string) {
-    return this.invoiceService.deleteOrderById(id);
+  deleteInvoice(@Param('id') id: string) {
+    return this.invoiceService.deleteInvoiceById(id);
   }
 }
