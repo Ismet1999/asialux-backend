@@ -34,6 +34,7 @@ import { Prisma } from '@prisma/client';
 import { UpdateUserDto } from './dto/UpdateUser.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { SETTINGS } from 'src/app.utils';
+import { FindUserDto } from './dto/FindUser.dto';
 @ApiTags('User')
 @Controller('user')
 export class UserController {
@@ -52,7 +53,7 @@ export class UserController {
   //   return this.userService.getUsers({ companyId });
   // }
   @Get('/')
-  findAllUser(query: any) {
+  findAllUser(@Query() query: FindUserDto) {
     return this.userService.getAllUser(query);
   }
 

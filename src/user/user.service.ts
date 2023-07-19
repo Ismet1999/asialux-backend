@@ -27,8 +27,9 @@ export class UserService {
       },
     });
   }
-  getAllUser(query: any) {
+  getAllUser(where: Prisma.UserWhereInput) {
     return this.prisma.user.findMany({
+      where,
       include: {
         branch: true,
       },
