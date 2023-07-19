@@ -10,27 +10,29 @@ import { PaymentStatus } from './payment.type';
 export class PaymentService {
   constructor(private prisma: PrismaService) {}
 
-  getAllOrder(query: any) {
-    return this.prisma.payment.findMany();
+  getAllPayment(where: Prisma.PaymentWhereInput) {
+    return this.prisma.payment.findMany({
+      where,
+    });
   }
-  getOrderById(id: string) {
+  getPaymentById(id: string) {
     return this.prisma.payment.findUnique({ where: { id } });
   }
 
-  createOrder(order: CreatePaymentDto) {
+  createPayment(payment: CreatePaymentDto) {
     return this.prisma.payment.create({
-      data: { ...order, status: PaymentStatus.PENDING },
+      data: { ...payment, status: PaymentStatus.PENDING },
     });
   }
 
-  updateOrderById(id: string, body: UpdatePaymentDto) {
+  updatePaymentById(id: string, body: UpdatePaymentDto) {
     return this.prisma.payment.update({
       where: { id },
       data: body,
     });
   }
 
-  deleteOrderById(id: string) {
+  deletePaymentById(id: string) {
     return this.prisma.payment.delete({ where: { id } });
   }
 }

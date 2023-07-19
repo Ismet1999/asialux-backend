@@ -27,6 +27,7 @@ import { PaymentService } from './payment.service';
 import { SETTINGS } from 'src/app.utils';
 import { Payment } from './payment.entity';
 import { UpdatePaymentDto } from './dto/UpdatePayment.dto';
+import { FindPaymentDto } from './dto/FindPayment.dto';
 // import { RolesGuard } from '../auth/roles.guard';
 // import { Roles } from '../auth/roles.decorator';
 
@@ -42,8 +43,8 @@ export class PaymentController {
   })
   // @UseGuards(JwtAuthGuard)
   @Get('/')
-  findAllOrder(@Query() query: any) {
-    return this.paymentService.getAllOrder(query);
+  findAllPayment(@Query() query: FindPaymentDto) {
+    return this.paymentService.getAllPayment(query);
   }
 
   @ApiOperation({ summary: 'Get a payment' })
@@ -53,9 +54,9 @@ export class PaymentController {
     description: 'The payment not found',
   })
   @Get('/:id')
-  async getOrderById(@Param('id') id: string) {
+  async getPaymentById(@Param('id') id: string) {
     try {
-      const payment = await this.paymentService.getOrderById(id);
+      const payment = await this.paymentService.getPaymentById(id);
       if (!payment) throw new NotFoundException('Payment not found');
       return payment;
     } catch (error) {
@@ -69,12 +70,12 @@ export class PaymentController {
   // @Roles('admin')
   // @UseGuards(JwtAuthGuard, RolesGuard)
   @Post('/')
-  async createOrder(
+  async createPayment(
     @Body()
-    createOrderDto: CreatePaymentDto,
+    createPaymentDto: CreatePaymentDto,
   ) {
     try {
-      const res = await this.paymentService.createOrder(createOrderDto);
+      const res = await this.paymentService.createPayment(createPaymentDto);
       return res;
     } catch (error) {
       throw new BadRequestException(error);
@@ -87,13 +88,13 @@ export class PaymentController {
   // @Roles('admin')
   // @UseGuards(JwtAuthGuard, RolesGuard)
   @Put('/:id')
-  async updateOrder(
+  async updatePayment(
     @Param('id') id: string,
     @Body()
-    updateOrderDto: UpdatePaymentDto,
+    updatePaymentDto: UpdatePaymentDto,
   ) {
     try {
-      const res = await this.paymentService.updateOrderById(id, updateOrderDto);
+      const res = await this.paymentService.updatePaymentById(id, updatePaymentDto);
       if (!res) throw new NotFoundException('Payment not found');
       return res;
     } catch (error) {
@@ -107,7 +108,7 @@ export class PaymentController {
   // @Roles('admin')
   // @UseGuards(JwtAuthGuard, RolesGuard)
   @Delete('/:id')
-  deleteOrder(@Param('id') id: string) {
-    return this.paymentService.deleteOrderById(id);
+  deletePayment(@Param('id') id: string) {
+    return this.paymentService.deletePaymentById(id);
   }
 }
