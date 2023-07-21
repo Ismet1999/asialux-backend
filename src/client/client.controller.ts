@@ -33,6 +33,7 @@ import { Roles } from 'src/decorators/roles.decorator';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { ROLES } from 'src/user/user.utils';
+import { FindClientDto } from './dto/FindClient.dto';
 // import { RolesGuard } from '../auth/roles.guard';
 // import { Roles } from '../auth/roles.decorator';
 
@@ -48,7 +49,7 @@ export class ClientController {
   })
   // @UseGuards(JwtAuthGuard)
   @Get('/')
-  findAllClient(@Query() query: any) {
+  findAllClient(@Query() query: FindClientDto) {
     return this.clientService.getAllClient(query);
   }
 

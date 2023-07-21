@@ -7,5 +7,5 @@ export enum ROLES {
   CASHIER = 'cashier',
   OPERATOR = 'operator',
   FINANCIER = 'financier',
-  // DIRECTOR = 'director',
+  DIRECTOR = 'director',
 }

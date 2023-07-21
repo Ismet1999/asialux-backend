@@ -4,13 +4,27 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { UpdateClientDto } from './dto/UpdateClient.dto';
+import { FindClientDto } from './dto/FindClient.dto';
 
 @Injectable()
 export class ClientService {
   constructor(private prisma: PrismaService) {}
 
-  getAllClient(query: any) {
-    return this.prisma.client.findMany();
+  getAllClient(query: FindClientDto) {
+    return this.prisma.client.findMany({
+      where: {
+        ...query,
+        fullName: {
+          contains: query.fullName,
+        },
+        passportSeries: {
+          contains: query.passportSeries,
+        },
+        userId: {
+          contains: query.userId,
+        },
+      },
+    });
   }
   getClientById(id: string) {
     return this.prisma.client.findUnique({ where: { id } });

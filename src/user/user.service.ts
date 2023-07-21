@@ -68,10 +68,13 @@ export class UserService {
     return this.prisma.user.findUnique({ where: { id } });
   }
 
-  updateUserById(id: string, body: UpdateUserDto) {
+  async updateUserById(id: string, body: UpdateUserDto) {
     return this.prisma.user.update({
       where: { id },
-      data: body,
+      data: {
+        ...body,
+        password: body.password && (await this.hashService.hash(body.password)),
+      },
     });
   }
   updatePhotoUserById(id: string, body: { photo: string }) {
