@@ -14,13 +14,17 @@ export class OrderService {
   getAllOrder(where: FindOrderDto) {
     return this.prisma.order.findMany({
       where: {
-        branchId: where.branchId,
-        userId: where.userId,
+        branchId: {
+          contains: where.branchId,
+        },
+        userId: {
+          contains: where.userId,
+        },
         createdAt: {
           gte: where.startDate,
           lte: where.endDate,
         },
-        clientId: where.clientId,
+        clientId: { contains: where.clientId },
         type: where.type,
       },
     });
