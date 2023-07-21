@@ -13,12 +13,17 @@ import { ROLES } from '../user.utils';
 // export class UpdateUserDto extends CreateUserDto {}
 
 export class FindUserDto {
-  @ApiProperty({ example: 'John Doe', description: 'User fullName' })
+  @ApiProperty({
+    required: false,
+    example: 'John Doe',
+    description: 'User fullName',
+  })
   @IsOptional()
   @IsString({ message: 'fullName must be a valid string' })
   fullName: string;
 
   @ApiProperty({
+    required: false,
     example: 'passportSeries',
     description: 'User passportSeries',
   })
@@ -26,15 +31,13 @@ export class FindUserDto {
   @IsString({ message: 'passportSeries must be a valid string' })
   passportSeries: string;
 
-  @ApiProperty({
-    example: 1,
-    description: 'User branchId',
-  })
+  @ApiProperty({ required: false, example: 1, description: 'User branchId' })
   @IsOptional()
   @IsString({ message: 'branchId must be a valid string' })
   branchId: string;
 
   @ApiProperty({
+    required: false,
     example: ROLES.USER,
     description: 'User role',
   })
@@ -42,10 +45,7 @@ export class FindUserDto {
   @IsEnum(ROLES)
   role: ROLES;
 
-  @ApiProperty({
-    example: true,
-    description: 'User status',
-  })
+  @ApiProperty({ required: false, example: true, description: 'User status' })
   @IsOptional()
   @IsBoolean()
   status: boolean;

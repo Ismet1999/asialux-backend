@@ -30,12 +30,6 @@ export class UpdateUserDto {
   // branch: number;
 
   @ApiProperty({
-    example: 'photo',
-    description: 'User photo',
-  })
-  photo: string;
-
-  @ApiProperty({
     example: 'password',
     description: 'User password',
   })

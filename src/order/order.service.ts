@@ -5,14 +5,24 @@ import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { UpdateOrderDto } from './dto/UpdateOrder.dto';
 import { ReqData } from 'src/auth/auth.type';
+import { FindOrderDto } from './dto/FindOrder.dto';
 
 @Injectable()
 export class OrderService {
   constructor(private prisma: PrismaService) {}
 
-  getAllOrder(where: Prisma.OrderWhereInput) {
+  getAllOrder(where: FindOrderDto) {
     return this.prisma.order.findMany({
-      where: where,
+      where: {
+        branchId: where.branchId,
+        userId: where.userId,
+        createdAt: {
+          gte: where.startDate,
+          lte: where.endDate,
+        },
+        clientId: where.clientId,
+        type: where.type,
+      },
     });
   }
   getOrderById(id: string) {
