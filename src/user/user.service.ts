@@ -5,6 +5,7 @@ import { ROLES } from './user.utils';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { User, Prisma } from '@prisma/client';
 import { UpdateUserDto } from './dto/UpdateUser.dto';
+import { FindUserDto } from './dto/FindUser.dto';
 
 @Injectable()
 export class UserService {
@@ -27,9 +28,23 @@ export class UserService {
       },
     });
   }
-  getAllUser(where: Prisma.UserWhereInput) {
+  getAllUser(where: FindUserDto) {
     return this.prisma.user.findMany({
-      where,
+      where: {
+        ...where,
+        fullName: {
+          contains: where.fullName,
+        },
+        passportSeries: {
+          contains: where.passportSeries,
+        },
+        mainPhone: {
+          contains: where.mainPhone,
+        },
+        branchId: {
+          contains: where.branchId,
+        },
+      },
       include: {
         branch: true,
       },

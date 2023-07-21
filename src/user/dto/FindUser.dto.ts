@@ -31,6 +31,15 @@ export class FindUserDto {
   @IsString({ message: 'passportSeries must be a valid string' })
   passportSeries: string;
 
+  @ApiProperty({
+    required: false,
+    example: 'mainPhone',
+    description: 'User mainPhone',
+  })
+  @IsOptional()
+  @IsString({ message: 'mainPhone must be a valid string' })
+  mainPhone: string;
+
   @ApiProperty({ required: false, example: 1, description: 'User branchId' })
   @IsOptional()
   @IsString({ message: 'branchId must be a valid string' })
