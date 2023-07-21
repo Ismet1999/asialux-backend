@@ -7,5 +7,6 @@ export interface ReqData {
     photo: User['photo'];
     role: User['role'];
     branchId: User['branchId'];
+    superAdmin: User['superAdmin'];
   };
 }
