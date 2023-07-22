@@ -46,6 +46,7 @@ import { CreateOrderTourDto } from 'src/orderTour/dto/CreateOrderTour.dto';
 import { CreateTicketOrderDto } from './dto/CreateTicketOrder.dto';
 import { CreateOrderTicketDto } from 'src/orderTicket/dto/CreateOrderTicket.dto';
 import { OrderTicketService } from 'src/orderTicket/orderTicket.service';
+import { InvoiceService } from 'src/invoice/invoice.service';
 // import { RolesGuard } from '../auth/roles.guard';
 // import { Roles } from '../auth/roles.decorator';
 
@@ -54,6 +55,7 @@ import { OrderTicketService } from 'src/orderTicket/orderTicket.service';
 export class OrderController {
   constructor(
     private readonly orderService: OrderService,
+    private readonly invoiceService: InvoiceService,
     private readonly orderTourService: OrderTourService,
     private readonly orderTicketService: OrderTicketService,
   ) {}
@@ -128,7 +130,16 @@ export class OrderController {
         ticketId: createTourOrderDto.ticketId,
         tourDestination: createTourOrderDto.tourDestination,
       };
-      const orderTour = await this.orderTourService.createOrder(orderTourDto);
+      await this.orderTourService.createOrder(orderTourDto);
+      await this.invoiceService.createInvoice(
+        {
+          orderId: order.id,
+          clientId: order.clientId,
+          invoiceAmount: order.b2cPrice,
+        },
+        req.user,
+      );
+
       const res = await this.orderService.getOrderById(order.id);
       return res;
     } catch (error) {
@@ -160,8 +171,14 @@ export class OrderController {
         ticketId: createTicketOrderDto.ticketId,
         ticketDestination: createTicketOrderDto.ticketDestination,
       };
-      const orderTicket = await this.orderTicketService.createOrder(
-        orderTicketDto,
+      await this.orderTicketService.createOrder(orderTicketDto);
+      await this.invoiceService.createInvoice(
+        {
+          orderId: order.id,
+          clientId: order.clientId,
+          invoiceAmount: order.b2cPrice,
+        },
+        req.user,
       );
       const res = await this.orderService.getOrderById(order.id);
       return res;
