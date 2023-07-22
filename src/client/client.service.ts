@@ -17,9 +17,6 @@ export class ClientService {
         fullName: {
           contains: query.fullName,
         },
-        phone: {
-          has: query.phone,
-        },
         passportSeries: {
           contains: query.passportSeries,
         },
