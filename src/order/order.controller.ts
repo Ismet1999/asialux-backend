@@ -39,13 +39,20 @@ import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { ROLES } from 'src/user/user.utils';
 import { ReqData } from 'src/auth/auth.type';
+import { CreateTourOrderDto } from './dto/CreateTourOrder.dto';
+import { OrderType } from './order.utils';
+import { OrderTourService } from 'src/orderTour/orderTour.service';
+import { CreateOrderTourDto } from 'src/orderTour/dto/CreateOrderTour.dto';
 // import { RolesGuard } from '../auth/roles.guard';
 // import { Roles } from '../auth/roles.decorator';
 
 @ApiTags('Order')
 @Controller('order')
 export class OrderController {
-  constructor(private readonly orderService: OrderService) {}
+  constructor(
+    private readonly orderService: OrderService,
+    private readonly orderTourService: OrderTourService,
+  ) {}
   @ApiOperation({ summary: 'Get all Order' })
   @ApiResponse({
     status: 200,
@@ -85,6 +92,40 @@ export class OrderController {
   ) {
     try {
       const res = await this.orderService.createOrder(createOrderDto, req.user);
+      return res;
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
+  }
+
+  @ApiOperation({ summary: 'Create a new tour order' })
+  @ApiResponse({ status: 201, type: Order, description: 'The tour order' })
+  @ApiBearerAuth()
+  @Roles(ROLES.USER)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Post('/tour')
+  async createTourOrder(
+    @Body()
+    createTourOrderDto: CreateTourOrderDto,
+    @Request() req: ReqData,
+  ) {
+    try {
+      const orderDto: CreateOrderDto = {
+        b2bPrice: createTourOrderDto.b2bPrice,
+        b2cPrice: createTourOrderDto.b2cPrice,
+        clientId: createTourOrderDto.clientId,
+        type: OrderType.Tour,
+      };
+      const order = await this.orderService.createOrder(orderDto, req.user);
+      const orderTourDto: CreateOrderTourDto = {
+        orderId: order.id,
+        tourId: createTourOrderDto.tourId,
+        flightDate: createTourOrderDto.flightDate,
+        ticketId: createTourOrderDto.ticketId,
+        tourDestination: createTourOrderDto.tourDestination,
+      };
+      const orderTour = await this.orderTourService.createOrder(orderTourDto);
+      const res = await this.orderService.getOrderById(order.id);
       return res;
     } catch (error) {
       throw new BadRequestException(error);

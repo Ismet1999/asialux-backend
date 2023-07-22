@@ -45,7 +45,9 @@ export class OrderService {
     });
   }
   getOrderById(id: string) {
-    return this.prisma.order.findUnique({ where: { id } });
+    return this.prisma.order.findUnique({
+      where: { id },
+    });
   }
 
   createOrder(order: CreateOrderDto, user: ReqData['user']) {
