@@ -25,14 +25,6 @@ export class CreateTicketOrderDto {
   // @IsString({ message: 'user id must be a valid string' })
   // userId: string;
 
-  @ApiProperty({
-    example: '1',
-    description: 'tour id',
-  })
-  @IsNotEmpty({ message: 'tour id is required' })
-  @IsString({ message: 'tour id must be a valid string' })
-  tourId: string;
-
   // ticketId
   @ApiProperty({
     example: '1',
