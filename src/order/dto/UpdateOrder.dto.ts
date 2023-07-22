@@ -50,26 +50,4 @@ export class UpdateOrderDto {
   @IsOptional()
   @IsNumber({}, { message: 'b2cPrice must be a valid number' })
   b2cPrice: number;
-
-  @ApiProperty({
-    example: '2021-09-01',
-    description: 'start date',
-  })
-  @IsOptional()
-  @IsDateString(
-    { strict: true },
-    { message: 'start date must be a valid date (YYYY-MM-DD )' },
-  )
-  startDate: Date;
-
-  @ApiProperty({
-    example: '2021-09-01',
-    description: 'end date',
-  })
-  @IsOptional()
-  @IsDateString(
-    { strict: true },
-    { message: 'end date must be a valid date (YYYY-MM-DD )' },
-  )
-  endDate: Date;
 }
