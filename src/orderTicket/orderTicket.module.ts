@@ -7,6 +7,6 @@ import { PrismaModule } from 'src/prisma/prisma.module';
   imports: [PrismaModule],
   providers: [OrderTicketService],
   controllers: [OrderTicketController],
-  exports: [],
+  exports: [OrderTicketService],
 })
 export class OrderTicketModule {}
