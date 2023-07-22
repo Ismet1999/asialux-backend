@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Client" ALTER COLUMN "phone" SET DEFAULT ARRAY[]::TEXT[];

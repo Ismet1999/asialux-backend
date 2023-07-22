@@ -53,7 +53,7 @@ model User {
 model Client {
   id             String    @id @default(uuid())
   fullName       String
-  phone          String[]
+  phone          String[]  @default([])
   passportSeries String    @unique
   createdAt      DateTime  @default(now())
   user           User?     @relation(fields: [userId], references: [id])
