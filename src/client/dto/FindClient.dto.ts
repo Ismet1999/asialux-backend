@@ -29,6 +29,15 @@ export class FindClientDto {
   passportSeries: string;
 
   @ApiProperty({
+    example: '+9989898989',
+    description: 'phone',
+    required: false,
+  })
+  @IsOptional()
+  @IsString({ message: 'phone must be a valid string' })
+  phone: string;
+
+  @ApiProperty({
     required: false,
     example: 'userId',
     description: 'Client userId',
