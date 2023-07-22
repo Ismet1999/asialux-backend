@@ -20,12 +20,27 @@ export class OrderService {
         userId: {
           contains: where.userId,
         },
+        user: {
+          fullName: {
+            contains: where.userFullName,
+          },
+          phones: {
+            has: where.userPhone,
+          },
+          passportSeries: {
+            contains: where.userPassportSeries,
+          },
+        },
         createdAt: {
           gte: where.startDate,
           lte: where.endDate,
         },
         clientId: { contains: where.clientId },
         type: where.type,
+        orderNumber: where.orderNumber,
+      },
+      include: {
+        client: true,
       },
     });
   }
